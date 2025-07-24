@@ -9,14 +9,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Mail,
-  Facebook,
-  Twitter,
-  Instagram,
-  Youtube,
-  Tiktok,
-  ChevronUp,
-} from "lucide-react";
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaYoutube,
+  FaTiktok,
+  FaEnvelope,
+  FaChevronUp,
+} from "react-icons/fa";
 import Link from "next/link";
 
 export default function Footer() {
@@ -43,12 +43,12 @@ export default function Footer() {
           </Button>
 
           {/* Social Icons */}
-          <div className="flex space-x-3 mt-4">
-            <Facebook className="w-5 h-5" />
-            <Twitter className="w-5 h-5" />
-            <Instagram className="w-5 h-5" />
-            <Youtube className="w-5 h-5" />
-            <Tiktok className="w-5 h-5" />
+          <div className="flex space-x-3 mt-4 text-white text-lg">
+            <FaFacebookF />
+            <FaTwitter />
+            <FaInstagram />
+            <FaYoutube />
+            <FaTiktok />
           </div>
         </div>
 
@@ -100,7 +100,7 @@ export default function Footer() {
                     className="text-black"
                   />
                   <Button size="sm">
-                    <Mail className="w-4 h-4 mr-1" />
+                    <FaEnvelope className="w-4 h-4 mr-1" />
                     Send
                   </Button>
                 </div>
@@ -123,7 +123,7 @@ export default function Footer() {
           variant="ghost"
           className="rounded-full border border-white"
         >
-          <ChevronUp />
+          <FaChevronUp />
         </Button>
         <div className="mt-4 flex justify-center items-center gap-2 text-xs text-gray-400">
           <img src="/shopify.svg" alt="Shopify" className="h-4" />
