@@ -22,9 +22,9 @@ const Footer = () => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
   return (
-    <footer className="bg-black text-gray-300 px-5 w-full">
+    <footer className="bg-black text-gray-300 px-15 w-full">
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto py-10 border-b border-gray-700">
+      <div className="max-w-7xl mx-auto py-15 border-b border-gray-700">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Column 1: Brand Info */}
           <div className="space-y-4">
