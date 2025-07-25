@@ -243,7 +243,7 @@ const Footer = () => {
                   <CurrencySelector />
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <LanguageSelector/>
+                  <LanguageSelector />
                 </div>
               </div>
             </div>
