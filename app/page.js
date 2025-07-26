@@ -1,10 +1,14 @@
-import Footer from "@/components/Footer";
-import { Header } from "@radix-ui/react-accordion";
+import BrandsSlider from "@/components/BrandSlider";
+import Map from "@/components/Map";
+import TestimonialSlider from "@/components/TestimonialSlider";
 
 export default function Home() {
   return (
     <>
-      <h1>Home</h1>
+      <main className="min-h-screen grid grid-rows-[1fr_auto]">Home</main>
+      <TestimonialSlider />
+      <BrandsSlider />
+      <Map />
     </>
   );
 }
