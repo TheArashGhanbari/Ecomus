@@ -279,7 +279,7 @@ function Header() {
             >
               <span className="text-white">{item.label}</span>
               {item.hasDropdown && <DropdownArrow />}
-            </div>
+          </div>
           ))}
         </nav>
 

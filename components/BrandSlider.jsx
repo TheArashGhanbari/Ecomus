@@ -115,7 +115,7 @@ const BrandSlider = () => {
 
         {/* Navigation Dots */}
         {shouldShowNavigation && totalPages > 1 && (
-          <div className="flex justify-center items-center mt-4 gap-2">
+          <div className="flex justify-center items-center mt-4 gap-2 cursor-pointer text-white ">
             {Array.from({ length: totalPages }).map((_, i) => (
               <button
                 key={i}

@@ -77,10 +77,10 @@ const NavigationButton = ({ direction, onClick, disabled }) => {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`p-3 rounded-full border border-white transition-all duration-200 ${
+      className={`p-3 rounded-full border border-white text-white transition-colors ${
         disabled
           ? "opacity-30 cursor-not-allowed"
-          : "hover:bg-white hover:text-black"
+          : "hover:bg-transparent hover:border-red-500 hover:text-red-500"
       }`}
       aria-label={`${direction === "prev" ? "Previous" : "Next"} testimonial`}
     >
@@ -119,76 +119,112 @@ const TestimonialSlider = () => {
       <div className="w-full px-6 sm:px-12 lg:px-25 py-8 sm:py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Text Content */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
-              transition={{ duration: 0.5 }}
-              className="text-white space-y-3 sm:space-y-4 lg:space-y-5"
-            >
-              <QuoteIcon />
+          <div className="space-y-3 sm:space-y-4 lg:space-y-5">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -30, scale: 0.95 }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                  staggerChildren: 0.1,
+                }}
+                className="text-white space-y-3 sm:space-y-4 lg:space-y-5"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.5 }}
+                >
+                  <QuoteIcon />
+                </motion.div>
 
-              <h3 className="text-sm font-semibold uppercase">
-                {activeTestimonial.title}
-              </h3>
+                <motion.h3
+                  className="text-sm font-semibold uppercase"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                >
+                  {activeTestimonial.title}
+                </motion.h3>
 
-              <StarRating rating={activeTestimonial.rating} />
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                  <StarRating rating={activeTestimonial.rating} />
+                </motion.div>
 
-              <p className="text-sm leading-6 sm:leading-7 lg:leading-[34px] max-w-xl md:text-lg lg:text-2xl">
-                {activeTestimonial.content}
-              </p>
+                <motion.p
+                  className="text-sm leading-6 sm:leading-7 lg:leading-[34px] max-w-xl md:text-lg lg:text-2xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                  {activeTestimonial.content}
+                </motion.p>
 
-              {/* User info with image on all screens */}
-              <div className="mt-4 lg:mt-6 flex items-center gap-4">
-                {/* Larger image without border */}
-                <div className="relative w-[65px] h-[65px] lg:hidden rounded-lg overflow-hidden">
-                  <Image
-                    src={activeTestimonial.userImage}
-                    alt={activeTestimonial.purchaseItem}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+                {/* User info with image on all screens */}
+                <motion.div
+                  className="mt-4 lg:mt-6 flex items-center gap-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.5 }}
+                >
+                  {/* Larger image without border */}
+                  <div className="relative w-[65px] h-[65px] lg:hidden rounded-lg overflow-hidden">
+                    <Image
+                      src={activeTestimonial.userImage}
+                      alt={activeTestimonial.purchaseItem}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
 
-                <div>
-                  <h4 className="text-sm font-semibold">
-                    {activeTestimonial.userName}
-                  </h4>
-                  <p className="text-white">
-                    Purchase item: {activeTestimonial.purchaseItem}
-                  </p>
-                </div>
-              </div>
+                  <div>
+                    <h4 className="text-sm font-semibold">
+                      {activeTestimonial.userName}
+                    </h4>
+                    <p className="text-white">
+                      Purchase item: {activeTestimonial.purchaseItem}
+                    </p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
 
-              {/* Navigation Buttons */}
-              <div className="flex gap-3 mt-6 lg:mt-10">
-                <NavigationButton
-                  direction="prev"
-                  onClick={prevSlide}
-                  disabled={currentSlide === 0}
-                />
-                <NavigationButton
-                  direction="next"
-                  onClick={nextSlide}
-                  disabled={currentSlide === TESTIMONIALS.length - 1}
-                />
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            {/* Navigation Buttons - Static, no animation */}
+            <div className="flex gap-3 mt-6 lg:mt-10">
+              <NavigationButton
+                direction="prev"
+                onClick={prevSlide}
+                disabled={currentSlide === 0}
+              />
+              <NavigationButton
+                direction="next"
+                onClick={nextSlide}
+                disabled={currentSlide === TESTIMONIALS.length - 1}
+              />
+            </div>
+          </div>
 
           {/* Larger image for desktop */}
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide + "-img"}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
+              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+              exit={{ opacity: 0, scale: 0.8, rotateY: 15 }}
+              transition={{
+                duration: 0.7,
+                ease: [0.25, 0.46, 0.45, 0.94],
+              }}
               className="hidden lg:flex justify-end"
             >
-              <div className="relative w-[340px] h-[340px] rounded-2xl overflow-hidden">
+              <div className="relative w-[340px] h-[340px] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
                   src={activeTestimonial.userImage}
                   alt={activeTestimonial.purchaseItem}
