@@ -1,6 +1,7 @@
 import "/styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = {
   title: "ecomus",
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
         <Header />
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   );
