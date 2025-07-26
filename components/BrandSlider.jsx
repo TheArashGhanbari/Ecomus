@@ -61,7 +61,7 @@ const BrandsSlider = () => {
       className="bg-gradient-to-b from-scheme-1-from to-scheme-1-to"
       data-color-scheme="scheme-1"
     >
-      <div className="container mx-auto relative">
+      <div className="max-w-screen-2xl mx-auto relative">
         <div className="relative">
           <div className="absolute inset-0 border border-line-border rounded-md pointer-events-none z-10"></div>
 

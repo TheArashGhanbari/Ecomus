@@ -68,8 +68,8 @@ const TestimonialsSection = () => {
       }}
     >
       {/* Content */}
-      <div className="w-full px-6 sm:px-12 lg:px-25 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+      <div className="w-full px-6 sm:px-12 lg:px-25 py-8 sm:py-12 lg:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Text Content */}
           <AnimatePresence mode="wait">
             <motion.div
@@ -78,7 +78,7 @@ const TestimonialsSection = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}
               transition={{ duration: 0.5 }}
-              className="text-white space-y-5"
+              className="text-white space-y-3 sm:space-y-4 lg:space-y-5"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@ const TestimonialsSection = () => {
                 height="30"
                 viewBox="0 0 46 31"
                 fill="none"
-                className="mb-6"
+                className="mb-4 lg:mb-6"
               >
                 <path
                   d="M32.4413 30.5L37.8204 19.9545L38.1913 19.2273H37.375H26.375V0.5H45.5V19.6071L39.9438 30.5H32.4413ZM6.56633 30.5L11.9454 19.9545L12.3163 19.2273H11.5H0.5V0.5H19.625V19.6071L14.0688 30.5H6.56633Z"
@@ -104,12 +104,12 @@ const TestimonialsSection = () => {
                 ))}
               </div>
 
-              <p className="text-sm leading-[34px] max-w-xl md:text-2xl">
+              <p className="text-sm leading-6 sm:leading-7 lg:leading-[34px] max-w-xl md:text-lg lg:text-2xl">
                 {activeTestimonial.content}
               </p>
 
               {/* User info with image on all screens */}
-              <div className="mt-6 flex items-center gap-4">
+              <div className="mt-4 lg:mt-6 flex items-center gap-4">
                 {/* Larger image without border */}
                 <div className="relative w-[65px] h-[65px] lg:hidden rounded-lg overflow-hidden">
                   <Image
@@ -131,7 +131,7 @@ const TestimonialsSection = () => {
               </div>
 
               {/* Buttons */}
-              <div className="flex gap-3 mt-10">
+              <div className="flex gap-3 mt-6 lg:mt-10">
                 <button
                   onClick={prevSlide}
                   disabled={currentSlide === 0}

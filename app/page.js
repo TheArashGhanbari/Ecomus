@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <main className="min-h-screen grid grid-rows-[1fr_auto]">Home</main>
-      <div className="p-14 flex-col space-y-15">
+      <div className="w-full p-14 flex-col space-y-15">
         <TestimonialSlider />
         <BrandsSlider />
       </div>
