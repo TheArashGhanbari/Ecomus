@@ -59,7 +59,7 @@ const TestimonialsSection = () => {
   const activeTestimonial = testimonials[currentSlide];
 
   return (
-    <div className="shopify-section hdt-section hdt-testimonials-with-image">
+    <div className="shopify-section hdt-section hdt-testimonials-with-image mx-14">
       <div
         className="max-w-screen-xl mx-auto rounded-xl overflow-hidden relative min-h-[500px] p-5 py-10 flex items-center"
         style={{
