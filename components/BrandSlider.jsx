@@ -3,24 +3,42 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-const BrandsSlider = () => {
+// Brand data
+const BRANDS = [
+  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001831.png?v=1750060905&width=304",
+  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001831-2.png?v=1750060921&width=354",
+  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018313.png?v=1750060942&width=304",
+  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018314.png?v=1750060960&width=304",
+  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018315.png?v=1750060991&width=304",
+  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018316.png?v=1750061008&width=304",
+];
+
+// Responsive breakpoints for slides per view
+const BREAKPOINTS = {
+  desktop: 1150,
+  tablet: 768,
+};
+
+const SLIDES_PER_VIEW = {
+  desktop: 6,
+  tablet: 3,
+  mobile: 2,
+};
+
+const BrandSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [slidesPerView, setSlidesPerView] = useState(2);
+  const [slidesPerView, setSlidesPerView] = useState(SLIDES_PER_VIEW.mobile);
 
-  const brands = [
-    "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001831.png?v=1750060905&width=304",
-    "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001831-2.png?v=1750060921&width=354",
-    "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018313.png?v=1750060942&width=304",
-    "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018314.png?v=1750060960&width=304",
-    "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018315.png?v=1750060991&width=304",
-    "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018316.png?v=1750061008&width=304",
-  ];
-
+  // Handle responsive slides per view
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1150) setSlidesPerView(6);
-      else if (window.innerWidth >= 768) setSlidesPerView(3);
-      else setSlidesPerView(2);
+      if (window.innerWidth >= BREAKPOINTS.desktop) {
+        setSlidesPerView(SLIDES_PER_VIEW.desktop);
+      } else if (window.innerWidth >= BREAKPOINTS.tablet) {
+        setSlidesPerView(SLIDES_PER_VIEW.tablet);
+      } else {
+        setSlidesPerView(SLIDES_PER_VIEW.mobile);
+      }
     };
 
     handleResize();
@@ -28,6 +46,7 @@ const BrandsSlider = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Reset to first slide when slides per view changes
   useEffect(() => {
     setCurrentIndex(0);
   }, [slidesPerView]);
@@ -35,25 +54,28 @@ const BrandsSlider = () => {
   const nextSlide = () => {
     setCurrentIndex((prev) => {
       const next = prev + slidesPerView;
-      return next >= brands.length ? 0 : next;
+      return next >= BRANDS.length ? 0 : next;
     });
   };
 
   const prevSlide = () => {
     setCurrentIndex((prev) => {
       const prevIndex = prev - slidesPerView;
-      return prevIndex < 0 ? brands.length - slidesPerView : prevIndex;
+      return prevIndex < 0 ? BRANDS.length - slidesPerView : prevIndex;
     });
   };
 
-  const visibleBrands = brands.slice(
+  const goToSlide = (slideIndex) => {
+    setCurrentIndex(slideIndex * slidesPerView);
+  };
+
+  const visibleBrands = BRANDS.slice(
     currentIndex,
     currentIndex + slidesPerView
   );
-
-  const totalPages = Math.ceil(brands.length / slidesPerView);
+  const totalPages = Math.ceil(BRANDS.length / slidesPerView);
   const currentPage = Math.floor(currentIndex / slidesPerView) + 1;
-  const shouldShowNavigation = slidesPerView < brands.length;
+  const shouldShowNavigation = slidesPerView < BRANDS.length;
 
   return (
     <section
@@ -63,11 +85,11 @@ const BrandsSlider = () => {
     >
       <div className="max-w-screen-2xl mx-auto relative">
         <div className="relative">
-          <div className="absolute inset-0 border border-line-border rounded-md pointer-events-none z-10"></div>
+          <div className="absolute inset-0 border border-line-border rounded-md pointer-events-none z-10" />
 
           <div className="relative overflow-hidden rounded-md">
             <div
-              className={`grid grid-cols-${slidesPerView} gap-0`}
+              className="grid gap-0"
               style={{
                 gridTemplateColumns: `repeat(${slidesPerView}, minmax(0, 1fr))`,
               }}
@@ -91,17 +113,19 @@ const BrandsSlider = () => {
           </div>
         </div>
 
+        {/* Navigation Dots */}
         {shouldShowNavigation && totalPages > 1 && (
           <div className="flex justify-center items-center mt-4 gap-2">
             {Array.from({ length: totalPages }).map((_, i) => (
               <button
                 key={i}
-                onClick={() => setCurrentIndex(i * slidesPerView)}
+                onClick={() => goToSlide(i)}
                 className={`w-2 h-2 rounded-full transition-colors ${
                   i + 1 === currentPage
                     ? "bg-primary scale-125"
                     : "bg-gray-300 hover:bg-gray-400"
                 }`}
+                aria-label={`Go to slide ${i + 1}`}
               />
             ))}
           </div>
@@ -111,4 +135,4 @@ const BrandsSlider = () => {
   );
 };
 
-export default BrandsSlider;
+export default BrandSlider;
