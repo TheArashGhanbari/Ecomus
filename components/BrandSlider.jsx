@@ -64,7 +64,7 @@ const BrandsSlider = () => {
     >
       <div className="container mx-auto px-4 relative">
         {/* Section Heading - Empty in original */}
-        <div className="mb-[30px] flex flex-col gap-[15px] text-left"></div>
+        <div className="flex flex-col gap-[15px] text-left"></div>
 
         {/* Brands Container */}
         <div className="relative">
