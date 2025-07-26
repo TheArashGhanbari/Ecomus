@@ -3,40 +3,38 @@
 import React, { useState } from "react";
 import { FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 const TestimonialsSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Helper function to convert protocol-relative URLs to HTTPS
   const toAbsoluteUrl = (url) => {
-    if (url.startsWith("//")) {
-      return `https:${url}`;
-    }
+    if (url.startsWith("//")) return `https:${url}`;
     return url;
   };
 
   const testimonials = [
     {
-      title: "ONE CUSTOMER'S RARE REVIEWS",
+      title: "OUR CUSTOMER'S RAVE REVIEWS",
       rating: 5,
       content:
         "This four-button console is a perfect throwback! Simple design with classic games like Contra and Mario—great for reliving childhood memories.",
       userName: "Robert Smith",
       purchaseItem: "Coaler Master Callier K2",
       userImage: toAbsoluteUrl(
-        "//ecomus-2-2.myshopify.com/cdn/shop/files/testimonial.png?v=1744862505&width=734"
+        "https://ecomus-2-2.myshopify.com/cdn/shop/files/testimonial.png?v=1744862505&width=450"
       ),
       bgImage: toAbsoluteUrl(
-        "//ecomus-2-2.myshopify.com/cdn/shop/files/Mask_group_8e8cb1ec-efc2-4321-9bbd-3bd690f5f028.png?v=1744862147&width=2880"
+        "https://ecomus-2-2.myshopify.com/cdn/shop/files/Mask_group_8e8cb1ec-efc2-4321-9bbd-3bd690f5f028.png?v=1744862147&width=1400"
       ),
     },
     {
-      title: "ONE CHITCHMER'S BANK REVENGE",
+      title: "OUR CUSTOMER'S RAVE REVIEWS",
       rating: 5,
       content:
-        "This form-button connects to a perfect non-standard sample design with classic gamers like Coarse and Klein—great for recharge/displaced memories.",
-      userName: "Basket Skills",
-      purchaseItem: "Purchase Item Copies Master Online by",
+        "With stunning visuals and seamless motion tracking, this VR headset delivers an immersive experience that’s perfect for gaming and virtual exploration.",
+      userName: "Jack Smith",
+      purchaseItem: "HTC VIVE Pro Virtual Reality Headset",
       userImage: toAbsoluteUrl(
         "//ecomus-2-2.myshopify.com/cdn/shop/files/testimonial2_f3988b0f-61f1-48e2-a801-8ef2806ff05b.png?v=1750062469&width=734"
       ),
@@ -47,45 +45,42 @@ const TestimonialsSection = () => {
   ];
 
   const nextSlide = () => {
-    setCurrentSlide((prev) =>
-      prev === testimonials.length - 1 ? 0 : prev + 1
-    );
+    if (currentSlide < testimonials.length - 1) {
+      setCurrentSlide((prev) => prev + 1);
+    }
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
-    );
+    if (currentSlide > 0) {
+      setCurrentSlide((prev) => prev - 1);
+    }
   };
 
   const activeTestimonial = testimonials[currentSlide];
 
   return (
-    <div className="shopify-section hdt-section hdt-testimonials-with-image py-10 px-4 sm:px-6">
+    <div className="shopify-section hdt-section hdt-testimonials-with-image py-20 sm:px-8">
       <div
-        className="max-w-7xl mx-auto rounded-xl overflow-hidden relative"
+        className="max-w-screen-xl mx-auto rounded-xl overflow-hidden relative px-20 min-h-[600px] flex items-center"
         style={{
           backgroundImage: `url(${activeTestimonial.bgImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-50">
-          <Image
-            src="https://ecomus-2-2.myshopify.com/cdn/shop/files/Mask_group_8e8cb1ec-efc2-4321-9bbd-3bd690f5f028.png?v=1744862147&width=1400"
-            alt="background"
-            priority
-            fill
-            className="w-full h-full object-cover rounded-xl"
-          />
-        </div>
-
-        <div className="relative z-10">
-          <div className="hdt-main-testimonial grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 sm:p-8 md:p-10">
-            {/* Testimonial Content */}
-            <div className="hdt-testimonial-wrap flex flex-col justify-center text-white">
-              <div className="mb-6">
+        {/* Content */}
+        <div className="w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            {/* Text Content */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 50 }}
+                transition={{ duration: 0.5 }}
+                className="text-white space-y-6 p-4"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="46"
@@ -98,79 +93,76 @@ const TestimonialsSection = () => {
                     stroke="#B5B5B5"
                   />
                 </svg>
-              </div>
 
-              <div className="mb-4">
-                <h3 className="text-xs md:text-sm font-semibold uppercase tracking-wider">
+                <h3 className="text-sm font-bold uppercase tracking-wider">
                   {activeTestimonial.title}
                 </h3>
-              </div>
 
-              <div className="mb-6 flex">
-                {[...Array(activeTestimonial.rating)].map((_, i) => (
-                  <FaStar key={i} className="text-yellow-400 w-4 h-4 mx-0.5" />
-                ))}
-              </div>
-
-              <div className="mb-6">
-                <p className="text-base md:text-lg lg:text-xl leading-relaxed">
-                  {activeTestimonial.content}
-                </p>
-              </div>
-
-              <div className="flex items-center mt-4">
-                <div>
-                  <h4 className="text-base md:text-lg font-semibold">
-                    {activeTestimonial.userName}
-                  </h4>
-                  <p className="text-sm md:text-base mt-1">
-                    {activeTestimonial.purchaseItem}
-                  </p>
-                </div>
-              </div>
-
-              {/* Navigation buttons below author info */}
-              <div className="flex items-center justify-between mt-8">
-                <button
-                  onClick={prevSlide}
-                  className="flex items-center justify-center rounded-full border-1 border-stone-50 bg-opacity-20 hover:bg-opacity-30 p-2 transition-all"
-                >
-                  <FaChevronLeft className="text-white w-3 h-3 md:w-4 md:h-4" />
-                </button>
-
-                <div className="flex space-x-2">
-                  {testimonials.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentSlide(index)}
-                      className={`w-2 h-2 rounded-full ${
-                        currentSlide === index ? "bg-white" : "bg-gray-400"
-                      }`}
-                    />
+                <div className="flex">
+                  {[...Array(activeTestimonial.rating)].map((_, i) => (
+                    <FaStar key={i} className="text-yellow-400 w-5 h-5 mr-1" />
                   ))}
                 </div>
 
-                <button
-                  onClick={nextSlide}
-                  className="flex items-center justify-center rounded-full border-1 border-stone-50 bg-opacity-20 hover:bg-opacity-30 p-2 transition-all"
-                >
-                  <FaChevronRight className="text-white w-3 h-3 md:w-4 md:h-4" />
-                </button>
-              </div>
-            </div>
+                <p className="text-3xl max-w-xl">{activeTestimonial.content}</p>
 
-            {/* Testimonial Image (desktop only) */}
-            <div className="hidden lg:block hdt-testimonial-img-wrap rounded-xl overflow-hidden self-center">
-              <div className="h-full w-full aspect-square">
+                <div>
+                  <h4 className="text-lg font-semibold">
+                    {activeTestimonial.userName}
+                  </h4>
+                  <p className="text-base text-gray-300">
+                    Purchase item: {activeTestimonial.purchaseItem}
+                  </p>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex gap-4 mt-12">
+                  <button
+                    onClick={prevSlide}
+                    disabled={currentSlide === 0}
+                    className={`p-3 rounded-full border border-white text-white transition-all duration-200 hover:border-red-600 ${
+                      currentSlide === 0
+                        ? "opacity-30 cursor-not-allowed"
+                        : "hover:text-white"
+                    }`}
+                  >
+                    <FaChevronLeft className="w-4 h-4" />
+                  </button>
+
+                  <button
+                    onClick={nextSlide}
+                    disabled={currentSlide === testimonials.length - 1}
+                    className={`p-3 rounded-full border border-white text-white transition-all duration-200 hover:border-red-600 ${
+                      currentSlide === testimonials.length - 1
+                        ? "opacity-30 cursor-not-allowed"
+                        : "hover:text-white"
+                    }`}
+                  >
+                    <FaChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Image */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide + "-img"}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.5 }}
+                className="hidden lg:flex justify-center"
+              >
                 <Image
                   src={activeTestimonial.userImage}
                   alt={activeTestimonial.userName}
-                  width={400}
-                  height={400}
-                  className="w-full h-full object-cover rounded-xl border-4 border-white"
-                />  
-              </div>
-            </div>
+                  width={256}
+                  height={256}
+                  className="object-cover w-85 h-85 ml-35 rounded-3xl"
+                />
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
