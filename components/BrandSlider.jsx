@@ -16,7 +16,6 @@ const BrandsSlider = () => {
     "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018316.png?v=1750061008&width=304",
   ];
 
-  // Calculate slides per view based on screen size
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1150) setSlidesPerView(6);
@@ -29,12 +28,10 @@ const BrandsSlider = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Reset index when slidesPerView changes
   useEffect(() => {
     setCurrentIndex(0);
   }, [slidesPerView]);
 
-  // Navigation functions
   const nextSlide = () => {
     setCurrentIndex((prev) => {
       const next = prev + slidesPerView;
@@ -49,69 +46,51 @@ const BrandsSlider = () => {
     });
   };
 
-  // Total pages for dots navigation
+  const visibleBrands = brands.slice(
+    currentIndex,
+    currentIndex + slidesPerView
+  );
+
   const totalPages = Math.ceil(brands.length / slidesPerView);
   const currentPage = Math.floor(currentIndex / slidesPerView) + 1;
-
-  // Check if navigation should be visible
   const shouldShowNavigation = slidesPerView < brands.length;
 
   return (
     <section
       id="brands"
-      className="py-10 bg-gradient-to-b from-scheme-1-from to-scheme-1-to"
+      className="bg-gradient-to-b from-scheme-1-from to-scheme-1-to"
       data-color-scheme="scheme-1"
     >
-      <div className="container mx-auto px-4 relative">
-        {/* Section Heading - Empty in original */}
-        <div className="flex flex-col gap-[15px] text-left"></div>
-
-        {/* Brands Container */}
+      <div className="container mx-auto relative">
         <div className="relative">
-          {/* Border around entire slider */}
           <div className="absolute inset-0 border border-line-border rounded-md pointer-events-none z-10"></div>
 
-          {/* Slider Container */}
           <div className="relative overflow-hidden rounded-md">
-            {/* Brands Grid/Slider */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 relative">
-              {brands.map((src, index) => (
+            <div
+              className={`grid grid-cols-${slidesPerView} gap-0`}
+              style={{
+                gridTemplateColumns: `repeat(${slidesPerView}, minmax(0, 1fr))`,
+              }}
+            >
+              {visibleBrands.map((src, index) => (
                 <div
                   key={index}
-                  className={`
-                    relative group
-                    ${
-                      index % slidesPerView !== slidesPerView - 1
-                        ? "border-r"
-                        : ""
-                    }
-                    ${index < brands.length - slidesPerView ? "border-b" : ""}
-                    border-line-border
-                    ${
-                      index >= currentIndex &&
-                      index < currentIndex + slidesPerView
-                        ? "block"
-                        : "hidden"
-                    }
-                  `}
+                  className="border border-line-border flex items-center justify-center p-4"
                 >
-                  <div className="flex items-center justify-center w-full h-full min-h-[126px] p-3">
-                    <Image
-                      src={src}
-                      alt={`Brand ${index + 1}`}
-                      width={130}
-                      height={130}
-                      loading="lazy"
-                      className="w-auto h-auto max-h-[126px] transition-all duration-300 lg:grayscale lg:opacity-50 lg:group-hover:grayscale-0 lg:group-hover:opacity-100"
-                    />
-                  </div>
+                  <Image
+                    src={src}
+                    alt={`Brand ${index + 1}`}
+                    width={130}
+                    height={130}
+                    loading="lazy"
+                    className="w-auto h-auto max-h-[126px] transition-all duration-300 grayscale hover:grayscale-0"
+                  />
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Pagination Dots - Only show when needed */}
         {shouldShowNavigation && totalPages > 1 && (
           <div className="flex justify-center items-center mt-4 gap-2">
             {Array.from({ length: totalPages }).map((_, i) => (
@@ -123,8 +102,6 @@ const BrandsSlider = () => {
                     ? "bg-primary scale-125"
                     : "bg-gray-300 hover:bg-gray-400"
                 }`}
-                aria-label={`Go to page ${i + 1}`}
-                aria-current={i + 1 === currentPage ? "page" : undefined}
               />
             ))}
           </div>

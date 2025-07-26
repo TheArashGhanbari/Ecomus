@@ -15,7 +15,7 @@ const TestimonialsSection = () => {
 
   const testimonials = [
     {
-      title: "ONE CUSTOMER'S RARE REVIEWS",
+      title: "OUR CUSTOMER'S RARE REVIEWS",
       rating: 5,
       content:
         "This four-button console is a perfect throwback! Simple design with classic games like Contra and Mario—great for reliving childhood memories.",
@@ -29,7 +29,7 @@ const TestimonialsSection = () => {
       ),
     },
     {
-      title: "ONE CUSTOMER'S RARE REVIEWS",
+      title: "OUR CUSTOMER'S RARE REVIEWS",
       rating: 5,
       content:
         "With stunning visuals and seamless motion tracking, this VR headset delivers an immersive experience that's perfect for gaming and virtual exploration.",
@@ -59,121 +59,59 @@ const TestimonialsSection = () => {
   const activeTestimonial = testimonials[currentSlide];
 
   return (
-    <div className="shopify-section hdt-section hdt-testimonials-with-image mx-14">
-      <div
-        className="max-w-screen-xl mx-auto rounded-xl overflow-hidden relative min-h-[500px] p-5 py-10 flex items-center"
-        style={{
-          backgroundImage: `url(${activeTestimonial.bgImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Content */}
-        <div className="w-full px-6 sm:px-12 lg:px-20 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            {/* Text Content */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSlide}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
-                transition={{ duration: 0.5 }}
-                className="text-white space-y-5"
+    <div
+      className="max-w-screen-2xl mx-auto rounded-xl overflow-hidden flex items-center w-full"
+      style={{
+        backgroundImage: `url(${activeTestimonial.bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Content */}
+      <div className="w-full px-6 sm:px-12 lg:px-25 py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Text Content */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 50 }}
+              transition={{ duration: 0.5 }}
+              className="text-white space-y-5"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="30"
+                viewBox="0 0 46 31"
+                fill="none"
+                className="mb-6"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="40"
-                  height="30"
-                  viewBox="0 0 46 31"
-                  fill="none"
-                  className="mb-5"
-                >
-                  <path
-                    d="M32.4413 30.5L37.8204 19.9545L38.1913 19.2273H37.375H26.375V0.5H45.5V19.6071L39.9438 30.5H32.4413ZM6.56633 30.5L11.9454 19.9545L12.3163 19.2273H11.5H0.5V0.5H19.625V19.6071L14.0688 30.5H6.56633Z"
-                    stroke="#B5B5B5"
-                  />
-                </svg>
+                <path
+                  d="M32.4413 30.5L37.8204 19.9545L38.1913 19.2273H37.375H26.375V0.5H45.5V19.6071L39.9438 30.5H32.4413ZM6.56633 30.5L11.9454 19.9545L12.3163 19.2273H11.5H0.5V0.5H19.625V19.6071L14.0688 30.5H6.56633Z"
+                  stroke="#B5B5B5"
+                />
+              </svg>
 
-                <h3 className="text-sm font-bold uppercase tracking-[3px]">
-                  {activeTestimonial.title}
-                </h3>
+              <h3 className="text-sm font-semibold uppercase">
+                {activeTestimonial.title}
+              </h3>
 
-                <div className="flex mb-1">
-                  {[...Array(activeTestimonial.rating)].map((_, i) => (
-                    <FaStar
-                      key={i}
-                      className="text-white w-4 h-4 mr-2.5 mb-4"
-                    />
-                  ))}
-                </div>
+              <div className="flex mb-1">
+                {[...Array(activeTestimonial.rating)].map((_, i) => (
+                  <FaStar key={i} className="text-white w-4 h-4 mr-2.5 mb-4" />
+                ))}
+              </div>
 
-                <p className="text-[28px] leading-[34px] font-light max-w-xl">
-                  {activeTestimonial.content}
-                </p>
+              <p className="text-sm leading-[34px] max-w-xl md:text-2xl">
+                {activeTestimonial.content}
+              </p>
 
-                {/* User info with image on all screens */}
-                <div className="mt-6 flex items-center gap-4">
-                  {/* Larger image without border */}
-                  <div className="relative w-[65px] h-[65px] lg:hidden rounded-lg overflow-hidden">
-                    <Image
-                      src={activeTestimonial.userImage}
-                      alt={activeTestimonial.purchaseItem}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <div>
-                    <h4 className="text-lg font-semibold">
-                      {activeTestimonial.userName}
-                    </h4>
-                    <p className="text-base text-gray-300">
-                      Purchase item: {activeTestimonial.purchaseItem}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Buttons */}
-                <div className="flex gap-3 mt-10">
-                  <button
-                    onClick={prevSlide}
-                    disabled={currentSlide === 0}
-                    className={`p-3 rounded-full border border-white transition-all duration-200 ${
-                      currentSlide === 0
-                        ? "opacity-30 cursor-not-allowed"
-                        : "hover:bg-white hover:text-black"
-                    }`}
-                  >
-                    <FaChevronLeft className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    onClick={nextSlide}
-                    disabled={currentSlide === testimonials.length - 1}
-                    className={`p-3 rounded-full border border-white transition-all duration-200 ${
-                      currentSlide === testimonials.length - 1
-                        ? "opacity-30 cursor-not-allowed"
-                        : "hover:bg-white hover:text-black"
-                    }`}
-                  >
-                    <FaChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Larger image for desktop */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSlide + "-img"}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.5 }}
-                className="hidden lg:flex justify-end"
-              >
-                <div className="relative w-[340px] h-[340px] rounded-2xl overflow-hidden">
+              {/* User info with image on all screens */}
+              <div className="mt-6 flex items-center gap-4">
+                {/* Larger image without border */}
+                <div className="relative w-[65px] h-[65px] lg:hidden rounded-lg overflow-hidden">
                   <Image
                     src={activeTestimonial.userImage}
                     alt={activeTestimonial.purchaseItem}
@@ -181,9 +119,66 @@ const TestimonialsSection = () => {
                     className="object-cover"
                   />
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+
+                <div>
+                  <h4 className="text-sm font-semibold">
+                    {activeTestimonial.userName}
+                  </h4>
+                  <p className="text-white">
+                    Purchase item: {activeTestimonial.purchaseItem}
+                  </p>
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex gap-3 mt-10">
+                <button
+                  onClick={prevSlide}
+                  disabled={currentSlide === 0}
+                  className={`p-3 rounded-full border border-white transition-all duration-200 ${
+                    currentSlide === 0
+                      ? "opacity-30 cursor-not-allowed"
+                      : "hover:bg-white hover:text-black"
+                  }`}
+                >
+                  <FaChevronLeft className="w-4 h-4" />
+                </button>
+
+                <button
+                  onClick={nextSlide}
+                  disabled={currentSlide === testimonials.length - 1}
+                  className={`p-3 rounded-full border border-white transition-all duration-200 ${
+                    currentSlide === testimonials.length - 1
+                      ? "opacity-30 cursor-not-allowed"
+                      : "hover:bg-white hover:text-black"
+                  }`}
+                >
+                  <FaChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Larger image for desktop */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide + "-img"}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.5 }}
+              className="hidden lg:flex justify-end"
+            >
+              <div className="relative w-[340px] h-[340px] rounded-2xl overflow-hidden">
+                <Image
+                  src={activeTestimonial.userImage}
+                  alt={activeTestimonial.purchaseItem}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </div>
