@@ -111,6 +111,46 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
 }
+@layer utilities {
+  @media (min-width: 1150px) {
+    .cart-divider::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      left: -15px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      height: 29px;
+      max-height: 47px;
+      background-color: white;
+    }
+  }
+}
+.your-element {
+  position: relative;
+  color: white;
+  font-weight: inherit;
+  text-transform: capitalize;
+}
+
+.your-element::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.your-element:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
 
 @layer base {
   * {
