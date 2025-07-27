@@ -1,36 +1,174 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ecomus - Modern E-commerce Platform
+
+A comprehensive e-commerce website built with Next.js 15, featuring modern UI components, responsive design, and advanced shopping features.
+
+## Overview
+
+Ecomus is a full-featured e-commerce platform that provides:
+
+- Product browsing and search functionality
+- Category-based product organization
+- Interactive product details and reviews
+- Shopping cart and checkout process
+- User authentication and account management
+- Multi-language and multi-currency support
+- Responsive design for all devices
+
+## Features
+
+- **Product Management**: Browse products by categories with detailed product pages
+- **Interactive UI**: Modern components built with Radix UI and Framer Motion
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Brand Showcase**: Featured brand slider with major fashion brands
+- **Testimonials**: Customer review carousel with ratings
+- **Interactive Map**: Location-based services integration
+- **Premium Support**: Customer service integration
+- **Newsletter**: Email subscription functionality
+- **Multi-language**: Internationalization support
+- **Currency Selection**: Multi-currency support for global customers
+
+## Technical Stack
+
+- **Framework**: Next.js 15.4.3 (App Router)
+- **Frontend**: React 19.1.0
+- **Styling**: Tailwind CSS 4.0
+- **UI Components**: Radix UI primitives
+- **Animations**: Framer Motion
+- **Icons**: Lucide React & React Icons
+- **Maps**: React Leaflet
+- **Sliders**: Keen Slider & Swiper
+- **Notifications**: Sonner toast notifications
+- **Development**: ESLint & TypeScript support
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js (version 18 or higher)
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository
+2. Navigate to the project directory:
+   ```bash
+   cd Websites/ecomus
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+5. Open your browser and visit `http://localhost:3000`
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## Project Structure
+
+```
+├── app/                    # Next.js App Router pages
+│   ├── category/[name]/    # Dynamic category pages
+│   ├── product/[id]/       # Dynamic product pages
+│   ├── layout.js           # Root layout
+│   └── page.js             # Homepage
+├── components/             # Reusable UI components
+│   ├── ui/                 # Base UI components (Radix)
+│   ├── BrandSlider.jsx     # Brand showcase
+│   ├── CurrencySelector.jsx # Currency selection
+│   ├── Footer.jsx          # Site footer
+│   ├── Header.jsx          # Site header
+│   ├── LanguageSelector.jsx # Language selection
+│   ├── Map.jsx             # Interactive map
+│   ├── NewsLetterForm.jsx  # Newsletter signup
+│   ├── PremiumSupport.jsx  # Customer support
+│   ├── ProductCart.jsx     # Shopping cart
+│   ├── TestimonialSlider.jsx # Customer reviews
+│   └── subtitile.jsx       # Marquee text
+├── lib/                    # Utility functions
+├── public/                 # Static assets
+│   └── brands/             # Brand logos
+└── styles/                 # Global styles
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Components
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### UI Components
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Accordion**: Collapsible content sections
+- **Avatar**: User profile images
+- **Button**: Interactive buttons with variants
+- **Card**: Product and content cards
+- **Dialog**: Modal windows
+- **Dropdown**: Context menus
+- **Input**: Form inputs with validation
+- **Select**: Dropdown selections
+- **Switch**: Toggle controls
+- **Tabs**: Tabbed content navigation
+- **Tooltip**: Hover information displays
 
-## Learn More
+### Features
 
-To learn more about Next.js, take a look at the following resources:
+- **Brand Slider**: Showcase featured brands
+- **Testimonial Carousel**: Customer reviews and ratings
+- **Interactive Map**: Location services
+- **Newsletter Form**: Email subscription
+- **Premium Support**: Customer service integration
+- **Multi-language Support**: Internationalization
+- **Currency Selection**: Global payment support
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Styling
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The project uses Tailwind CSS 4.0 with:
 
-## Deploy on Vercel
+- Custom color schemes
+- Responsive design patterns
+- Dark/light theme support
+- Animation utilities
+- Custom component variants
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Code Quality
+
+- ESLint configuration for code quality
+- TypeScript support for type safety
+- Prettier for code formatting
+- Husky for git hooks
+
+### Performance
+
+- Next.js App Router for optimal routing
+- Image optimization with Next.js
+- Code splitting and lazy loading
+- SEO optimization
+
+## Deployment
+
+The application can be deployed to:
+
+- **Vercel** (recommended for Next.js)
+- **Netlify**
+- **AWS Amplify**
+- Any Node.js hosting platform
+
+## Contributing
+
+This is a modern e-commerce platform demonstrating:
+
+- Next.js 15 App Router
+- Modern React patterns
+- Component-driven development
+- Responsive design principles
+- E-commerce best practices
+
+## License
+
+This project is for educational and commercial purposes.
