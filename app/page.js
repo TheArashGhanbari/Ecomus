@@ -8,9 +8,18 @@ import TestimonialSlider from "@/components/TestimonialSlider";
 export default function Home() {
   return (
     <>
-      <main className="min-h-screen grid grid-rows-[1fr_auto]">Home</main>
-      <TestimonialSlider />
-      <BrandsSlider />
+      <main className="min-h-screen">
+        <MainTop />
+        <Marquee />
+        <PremiumSupport />
+      </main>
+
+      {/* Testimonial and Brand Sliders above Map */}
+      <section className="w-full px-14 py-14 space-y-15">
+        <TestimonialSlider />
+        <BrandsSlider />
+      </section>
+
       <Map />
     </>
   );
