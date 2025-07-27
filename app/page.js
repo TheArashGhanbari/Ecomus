@@ -14,7 +14,6 @@ export default function Home() {
         <TestimonialSlider />
         <BrandsSlider />
       </section>
-
       <Map />
     </>
   );
