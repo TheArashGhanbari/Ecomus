@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -64,7 +65,7 @@ function Header() {
         )}
 
         {/* Center - Logo */}
-        <div className="z-10 m:flex-grow flex justify-center m:flex-grow">
+        <Link className="z-10 m:flex-grow flex justify-center m:flex-grow">
           <img
             src="https://ecomus-2-2.myshopify.com/cdn/shop/files/logo_white.svg?v=1744703286&width=272"
             width={136}
@@ -130,7 +131,7 @@ function Header() {
             >
               <span className="text-white">{item.label}</span>
               {item.hasDropdown && <DropdownArrow />}
-          </div>
+            </div>
           ))}
         </nav>
 
