@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 
 // Utility function to convert relative URLs to absolute
 const toAbsoluteUrl = (url) => {
@@ -14,6 +14,7 @@ const toAbsoluteUrl = (url) => {
 // Testimonial data
 const TESTIMONIALS = [
   {
+    id: 1,
     title: "OUR CUSTOMER'S RARE REVIEWS",
     rating: 5,
     content:
@@ -28,6 +29,7 @@ const TESTIMONIALS = [
     ),
   },
   {
+    id: 2,
     title: "OUR CUSTOMER'S RARE REVIEWS",
     rating: 5,
     content:
@@ -77,10 +79,10 @@ const NavigationButton = ({ direction, onClick, disabled }) => {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`p-3 rounded-full border border-white text-white transition-colors ${
+      className={`p-3 rounded-full border border-white text-white transition-all duration-200 ${
         disabled
           ? "opacity-30 cursor-not-allowed"
-          : "hover:bg-transparent hover:border-red-500 hover:text-red-500"
+          : "hover:bg-white hover:text-black active:scale-95"
       }`}
       aria-label={`${direction === "prev" ? "Previous" : "Next"} testimonial`}
     >
@@ -89,22 +91,154 @@ const NavigationButton = ({ direction, onClick, disabled }) => {
   );
 };
 
-const TestimonialSlider = () => {
+// Single testimonial content component
+const TestimonialContent = ({ testimonial, className = "" }) => (
+  <div
+    className={`text-white space-y-3 sm:space-y-4 lg:space-y-5 ${className}`}
+  >
+    <div>
+      <QuoteIcon />
+    </div>
+
+    <h3 className="text-sm font-semibold uppercase">{testimonial.title}</h3>
+
+    <div>
+      <StarRating rating={testimonial.rating} />
+    </div>
+
+    <p className="text-sm leading-6 sm:leading-7 lg:leading-[34px] max-w-xl md:text-lg lg:text-2xl">
+      {testimonial.content}
+    </p>
+
+    {/* User info with image on all screens */}
+    <div className="mt-4 lg:mt-6 flex items-center gap-4">
+      {/* Larger image without border */}
+      <div className="relative w-[65px] h-[65px] lg:hidden rounded-lg overflow-hidden">
+        <Image
+          src={testimonial.userImage}
+          alt={testimonial.purchaseItem}
+          fill
+          className="object-cover"
+        />
+      </div>
+
+      <div>
+        <h4 className="text-sm font-semibold">{testimonial.userName}</h4>
+        <p className="text-white">Purchase item: {testimonial.purchaseItem}</p>
+      </div>
+    </div>
+  </div>
+);
+
+// Custom hook for slider logic
+const useSlider = (totalSlides) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(0);
 
-  const nextSlide = () => {
-    if (currentSlide < TESTIMONIALS.length - 1) {
-      setCurrentSlide((prev) => prev + 1);
-    }
-  };
+  const nextSlide = useCallback(() => {
+    setDirection(1);
+    setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
+  }, [totalSlides]);
 
-  const prevSlide = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide((prev) => prev - 1);
-    }
+  const prevSlide = useCallback(() => {
+    setDirection(-1);
+    setCurrentSlide((prev) => Math.max(prev - 1, 0));
+  }, []);
+
+  const goToSlide = useCallback(
+    (index) => {
+      const newDirection = index > currentSlide ? 1 : -1;
+      setDirection(newDirection);
+      setCurrentSlide(index);
+    },
+    [currentSlide]
+  );
+
+  return {
+    currentSlide,
+    direction,
+    nextSlide,
+    prevSlide,
+    goToSlide,
+    canGoNext: currentSlide < totalSlides - 1,
+    canGoPrev: currentSlide > 0,
   };
+};
+
+const TestimonialSlider = () => {
+  const {
+    currentSlide,
+    direction,
+    nextSlide,
+    prevSlide,
+    canGoNext,
+    canGoPrev,
+  } = useSlider(TESTIMONIALS.length);
 
   const activeTestimonial = TESTIMONIALS[currentSlide];
+
+  // Handle drag gestures using Framer Motion
+  const handleDragEnd = useCallback(
+    (event, info) => {
+      const { offset, velocity } = info;
+      const swipeThreshold = 50;
+      const velocityThreshold = 500;
+
+      if (
+        Math.abs(offset.x) > swipeThreshold ||
+        Math.abs(velocity.x) > velocityThreshold
+      ) {
+        if (offset.x > 0 && canGoPrev) {
+          prevSlide();
+        } else if (offset.x < 0 && canGoNext) {
+          nextSlide();
+        }
+      }
+    },
+    [canGoNext, canGoPrev, nextSlide, prevSlide]
+  );
+
+  // Animation variants
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+      scale: 0.95,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+      scale: 1,
+    },
+    exit: (direction) => ({
+      zIndex: 0,
+      x: direction < 0 ? 300 : -300,
+      opacity: 0,
+      scale: 0.95,
+    }),
+  };
+
+  const imageVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+      scale: 0.8,
+      rotateY: direction > 0 ? 15 : -15,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      rotateY: 0,
+    },
+    exit: (direction) => ({
+      x: direction < 0 ? 300 : -300,
+      opacity: 0,
+      scale: 0.8,
+      rotateY: direction < 0 ? 15 : -15,
+    }),
+  };
 
   return (
     <div
@@ -119,105 +253,60 @@ const TestimonialSlider = () => {
       <div className="w-full px-6 sm:px-12 lg:px-25 py-8 sm:py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Text Content */}
-          <div className="space-y-3 sm:space-y-4 lg:space-y-5">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSlide}
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -30, scale: 0.95 }}
-                transition={{
-                  duration: 0.6,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                  staggerChildren: 0.1,
-                }}
-                className="text-white space-y-3 sm:space-y-4 lg:space-y-5"
-              >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.5 }}
-                >
-                  <QuoteIcon />
-                </motion.div>
+          <div className="space-y-3 sm:space-y-4 lg:space-y-5 relative overflow-hidden">
+            <motion.div
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.1}
+              onDragEnd={handleDragEnd}
+              className="cursor-grab active:cursor-grabbing select-none"
+              whileDrag={{ scale: 0.98 }}
+            >
+              {/* Current slide content */}
+              <div className="relative">
+                <AnimatePresence mode="wait" custom={direction}>
+                  <motion.div
+                    key={currentSlide}
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                    }}
+                  >
+                    <TestimonialContent testimonial={activeTestimonial} />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </motion.div>
 
-                <motion.h3
-                  className="text-sm font-semibold uppercase"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
-                >
-                  {activeTestimonial.title}
-                </motion.h3>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                >
-                  <StarRating rating={activeTestimonial.rating} />
-                </motion.div>
-
-                <motion.p
-                  className="text-sm leading-6 sm:leading-7 lg:leading-[34px] max-w-xl md:text-lg lg:text-2xl"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.5 }}
-                >
-                  {activeTestimonial.content}
-                </motion.p>
-
-                {/* User info with image on all screens */}
-                <motion.div
-                  className="mt-4 lg:mt-6 flex items-center gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.5 }}
-                >
-                  {/* Larger image without border */}
-                  <div className="relative w-[65px] h-[65px] lg:hidden rounded-lg overflow-hidden">
-                    <Image
-                      src={activeTestimonial.userImage}
-                      alt={activeTestimonial.purchaseItem}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-semibold">
-                      {activeTestimonial.userName}
-                    </h4>
-                    <p className="text-white">
-                      Purchase item: {activeTestimonial.purchaseItem}
-                    </p>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Navigation Buttons - Static, no animation */}
+            {/* Navigation Buttons */}
             <div className="flex gap-3 mt-6 lg:mt-10">
               <NavigationButton
                 direction="prev"
                 onClick={prevSlide}
-                disabled={currentSlide === 0}
+                disabled={!canGoPrev}
               />
               <NavigationButton
                 direction="next"
                 onClick={nextSlide}
-                disabled={currentSlide === TESTIMONIALS.length - 1}
+                disabled={!canGoNext}
               />
             </div>
           </div>
 
           {/* Larger image for desktop */}
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={currentSlide + "-img"}
-              initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              exit={{ opacity: 0, scale: 0.8, rotateY: 15 }}
+              custom={direction}
+              variants={imageVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
               transition={{
                 duration: 0.7,
                 ease: [0.25, 0.46, 0.45, 0.94],
