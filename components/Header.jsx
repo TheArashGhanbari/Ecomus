@@ -2,15 +2,15 @@
 "use client";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <header className="w-full bg-[#23242d] text-white border-b border-white/100 h-[60px] lg:h-25">
+    <header className="w-full bg-[#23242d] text-white border-b border-white/100 h-[60px] lg:h-[179.6px]">
       {/* Top Bar - Mobile & Desktop */}
-
       <div className="relative w-full h-[60px] lg:h-25 lg:px-14 md:px-4 px-4 flex items-center justify-between">
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <form
@@ -82,15 +82,18 @@ function Header() {
         )}
 
         {/* Center - Logo */}
-        <div className="z-10 m:flex-grow flex justify-center m:flex-grow">
+        <Link
+          href="/"
+          className="z-10 m:flex-grow flex justify-center m:flex-grow"
+        >
           <img
             src="https://ecomus-2-2.myshopify.com/cdn/shop/files/logo_white.svg?v=1744703286&width=272"
             width={136}
             height={21}
             alt="Logo"
-            className="cursor-pointer w-24 w-[136px]"
+            className="cursor-pointer w-[136px]"
           />
-        </div>
+        </Link>
 
         {/* Right Side - Icons */}
         <div className="flex items-center gap-4">
@@ -188,9 +191,8 @@ function Header() {
           </div>
         </div>
       </div>
-
       {/* Desktop Bottom Bar */}
-      <div className="hidden lg:flex items-center h-20 justify-between px-15 py-3 bg-[#23242d] border-t border-white/100">
+      <div className="hidden  lg:flex items-center h-20 justify-between px-14 py-3 bg-[#23242d] border-t border-white/100">
         <Button className="flex items-center cursor-pointer gap-2 bg-[rgb(153,21,242)] h-10 hover:bg-[rgb(153,21,242)] text-white px-6 py-3 rounded-lg text-lg font-inherit shadow-none">
           <svg
             xmlns="http://www.w3.org/2000/svg"
