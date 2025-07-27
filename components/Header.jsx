@@ -2,6 +2,7 @@
 "use client";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { Link } from "lucide-react";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -70,7 +71,7 @@ function Header() {
         </div>
 
         {/* Center - Logo */}
-        <div className="z-10 m:flex-grow flex justify-center m:flex-grow">
+        <Link className="z-10 m:flex-grow flex justify-center m:flex-grow">
           <img
             src="https://ecomus-2-2.myshopify.com/cdn/shop/files/logo_white.svg?v=1744703286&width=272"
             width={136}
@@ -205,6 +206,7 @@ function Header() {
               viewBox="0 0 10 7"
               fill="none"
             >
+<<<<<<< HEAD
               <path
                 d="M10 1.24243L5 6.24243L0 1.24243L0.8875 0.354932L5 4.46743L9.1125 0.354931L10 1.24243Z"
                 fill="currentColor"
@@ -283,6 +285,12 @@ function Header() {
           <div className="your-element cursor-pointer flex items-center gap-1 capitalize font-inherit">
             Buy now
           </div>
+=======
+              <span className="text-white">{item.label}</span>
+              {item.hasDropdown && <DropdownArrow />}
+            </div>
+          ))}
+>>>>>>> 73b56032afa142466c0b0d820074f09ae6164382
         </nav>
 
         <div className="flex items-center gap-3">
