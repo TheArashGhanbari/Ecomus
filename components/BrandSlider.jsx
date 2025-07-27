@@ -5,12 +5,12 @@ import Image from "next/image";
 
 // Brand data
 const BRANDS = [
-  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001831.png?v=1750060905&width=304",
-  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001831-2.png?v=1750060921&width=354",
-  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018313.png?v=1750060942&width=304",
-  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018314.png?v=1750060960&width=304",
-  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018315.png?v=1750060991&width=304",
-  "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018316.png?v=1750061008&width=304",
+  "/brands/ssense.webp",
+  "/brands/burberry.webp",
+  "/brands/nike.webp",
+  "/brands/asos.webp",
+  "/brands/pull&bear.webp",
+  "/brands/gildan.webp",
 ];
 
 // Responsive breakpoints for slides per view

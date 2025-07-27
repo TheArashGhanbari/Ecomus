@@ -8,7 +8,6 @@ import { motion, AnimatePresence, PanInfo } from "framer-motion";
 // Utility function to convert relative URLs to absolute
 const toAbsoluteUrl = (url) => {
   if (url.startsWith("//")) return `https:${url}`;
-  if (url.startsWith("http")) return url;
   return url;
 };
 
@@ -22,10 +21,10 @@ const TESTIMONIALS = [
       "This four-button console is a perfect throwback! Simple design with classic games like Contra and Mario—great for reliving childhood memories.",
     userName: "Robert Smith",
     purchaseItem: "Coaler Master Callier K2",
-    userImage:
-      "https://ecomus-2-2.myshopify.com/cdn/shop/files/testimonial.png?v=1744862505&width=450",
-    bgImage:
-      "https://ecomus-2-2.myshopify.com/cdn/shop/files/Mask_group_8e8cb1ec-efc2-4321-9bbd-3bd690f5f028.png?v=1744862147&width=2880",
+    userImage: "/testimonial_console.webp",
+    bgImage: toAbsoluteUrl(
+      "//ecomus-2-2.myshopify.com/cdn/shop/files/Mask_group_8e8cb1ec-efc2-4321-9bbd-3bd690f5f028.png?v=1744862147&width=2880"
+    ),
   },
   {
     id: 2,
@@ -35,10 +34,10 @@ const TESTIMONIALS = [
       "With stunning visuals and seamless motion tracking, this VR headset delivers an immersive experience that's perfect for gaming and virtual exploration.",
     userName: "Jack Smith",
     purchaseItem: "HTC VIVE Pro Virtual Reality Headset",
-    userImage:
-      "https://ecomus-2-2.myshopify.com/cdn/shop/files/testimonial2_f3988b0f-61f1-48e2-a801-8ef2806ff05b.png?v=1750062469&width=734",
-    bgImage:
-      "https://ecomus-2-2.myshopify.com/cdn/shop/files/Mask_group_8e8cb1ec-efc2-4321-9bbd-3bd690f5f028.png?v=1744862147&width=2880",
+    userImage: "/testimonial_headset.webp",
+    bgImage: toAbsoluteUrl(
+      "//ecomus-2-2.myshopify.com/cdn/shop/files/Mask_group_8e8cb1ec-efc2-4321-9bbd-3bd690f5f028.png?v=1744862147&width=2880"
+    ),
   },
 ];
 
@@ -57,22 +56,6 @@ const QuoteIcon = () => (
       stroke="#B5B5B5"
     />
   </svg>
-);
-
-// Placeholder image component
-const PlaceholderImage = ({ size = "65px", className = "" }) => (
-  <div
-    className={`bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center text-white text-xs font-medium ${className}`}
-    style={{ width: size, height: size }}
-  >
-    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-      <path
-        fillRule="evenodd"
-        d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-        clipRule="evenodd"
-      />
-    </svg>
-  </div>
 );
 
 // Star rating component
@@ -132,14 +115,7 @@ const TestimonialContent = ({ testimonial, className = "" }) => (
           alt={testimonial.purchaseItem}
           fill
           className="object-cover"
-          sizes="65px"
-          priority={false}
-          onError={(e) => {
-            console.error("Image failed to load:", testimonial.userImage);
-            e.target.style.display = "none";
-          }}
         />
-        <PlaceholderImage size="65px" className="absolute inset-0 rounded-lg" />
       </div>
 
       <div>
@@ -196,13 +172,6 @@ const TestimonialSlider = () => {
   } = useSlider(TESTIMONIALS.length);
 
   const activeTestimonial = TESTIMONIALS[currentSlide];
-
-  // Debug: Log the current testimonial data
-  console.log("Current testimonial:", {
-    userImage: activeTestimonial.userImage,
-    bgImage: activeTestimonial.bgImage,
-    userName: activeTestimonial.userName,
-  });
 
   // Handle drag gestures using Framer Motion
   const handleDragEnd = useCallback(
@@ -274,7 +243,6 @@ const TestimonialSlider = () => {
         backgroundImage: `url(${activeTestimonial.bgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundColor: "#1f2937", // Fallback background color
       }}
     >
       {/* Content */}
@@ -347,19 +315,6 @@ const TestimonialSlider = () => {
                   alt={activeTestimonial.purchaseItem}
                   fill
                   className="object-cover"
-                  sizes="340px"
-                  priority={false}
-                  onError={(e) => {
-                    console.error(
-                      "Desktop image failed to load:",
-                      activeTestimonial.userImage
-                    );
-                    e.target.style.display = "none";
-                  }}
-                />
-                <PlaceholderImage
-                  size="340px"
-                  className="absolute inset-0 rounded-2xl"
                 />
               </div>
             </motion.div>
