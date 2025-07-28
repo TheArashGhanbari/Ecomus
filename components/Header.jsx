@@ -76,7 +76,7 @@ function Header() {
             width={136}
             height={21}
             alt="Logo"
-            className="cursor-pointer w-24 w-[136px]"
+            className="cursor-pointer  w-[136px]"
           />
         </div>
 

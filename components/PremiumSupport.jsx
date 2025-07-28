@@ -314,7 +314,7 @@ export default function PremiumSupport() {
   const isMobile = useMediaQuery({ query: "(max-width: 639px)" });
 
   return (
-    <div className="mb-10 border-b border-gray-300 px-4 py-8 sm:px-14 sm:py-5 ">
+    <div className=" border-b border-gray-300 px-4 py-8 sm:px-14 sm:py-5 ">
       <div className="max-w-7xl  ">
         {isMobile ? (
           <Swiper
