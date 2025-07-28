@@ -4,6 +4,7 @@ import Map from "@/components/Map";
 import PremiumSupport from "@/components/PremiumSupport";
 import Marquee from "@/components/subtitile";
 import TestimonialSlider from "@/components/TestimonialSlider";
+import TitleOfProduct from "@/components/TitleOfProduct";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
         <MainTop />
         <Marquee />
         <PremiumSupport />
+        <TitleOfProduct />
       </main>
 
       {/* Testimonial and Brand Sliders above Map */}
