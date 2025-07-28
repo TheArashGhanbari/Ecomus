@@ -15,24 +15,105 @@
     opacity: 0;
   }
 }
-/* تنظیمات سفارشی برای اسلایدر */
-.premium-swiper {
-  padding: 10px 0 30px;
+
+/* .custom-swiper .swiper-pagination {
+  margin-top: 20px;
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
 }
 
-.premium-swiper .swiper-pagination {
-  bottom: 10px;
+
+.custom-swiper .swiper-pagination {
+  margin-top: 24px;
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
-.premium-swiper .swiper-pagination-bullet {
-  width: 8px;
-  height: 8px;
-  background-color: #ccc;
-  opacity: 0.7;
+
+.custom-swiper .swiper-pagination-bullet {
+  width: 18px; 
+  height: 18px;
+  background-color: #d1d5db;
+  border-radius: 9999px;
+  opacity: 1;
+  position: relative;
+  border: none;
+  transition: all 0.3s ease;
 }
 
-.premium-swiper .swiper-pagination-bullet-active {
-  background-color: #888;
+
+.custom-swiper .swiper-pagination-bullet-active {
+  background-color: transparent;
+  border: 2px solid black;
+}
+
+
+.custom-swiper .swiper-pagination-bullet-active::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px; 
+  height: 6px;
+  background: black;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+} */
+/* مکان نقطه‌ها را ببریم زیر اسلایدها */
+.custom-swiper .swiper-pagination {
+  margin-top: 20px;
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+/* مکان نقطه‌ها زیر اسلاید */
+.custom-swiper .swiper-pagination {
+  margin-top: 24px;
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* دایره‌های غیرفعال کوچیک (مثل نقطه داخلی) */
+.custom-swiper .swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background-color: #d1d5db;
+  border-radius: 9999px;
+  opacity: 1;
+  position: relative;
+  border: none;
+  transition: all 0.3s ease;
+}
+/* دایره فعال بزرگ با حاشیه */
+.custom-swiper .swiper-pagination-bullet-active {
+  width: 18px;
+  height: 18px;
+  background-color: transparent;
+  border: 2px solid black;
+  z-index: 0; /* این باعث میشه جلو نیاد */
+}
+/* نقطه داخلی در دایره فعال */
+.custom-swiper .swiper-pagination-bullet-active::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: black;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
 }
 
 @media (min-width: 1476px) {
