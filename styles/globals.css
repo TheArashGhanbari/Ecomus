@@ -133,6 +133,75 @@
   transform: translate(-50%, -50%);
 }
 
+/* Brand Slider Swiper Styles - Same as Premium Support */
+.brand-swiper .swiper-pagination,
+.brand-swiper-pagination {
+  margin-top: 20px;
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.brand-swiper .swiper-pagination,
+.brand-swiper-pagination {
+  margin-top: 24px;
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.brand-swiper .swiper-pagination-bullet,
+.brand-swiper-pagination .swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 9999px;
+  opacity: 1;
+  position: relative;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.brand-swiper .swiper-pagination-bullet-active,
+.brand-swiper-pagination .swiper-pagination-bullet-active {
+  width: 18px;
+  height: 18px;
+  background-color: transparent;
+  border: 2px solid black;
+  z-index: 0;
+}
+
+.brand-swiper .swiper-pagination-bullet-active::before,
+.brand-swiper-pagination .swiper-pagination-bullet-active::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: black;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+}
+
+/* Smooth transitions for brand slider */
+.brand-swiper .swiper-slide {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brand-swiper .swiper-slide-active {
+  transform: scale(1.02);
+}
+
+.brand-swiper .swiper-slide-prev,
+.brand-swiper .swiper-slide-next {
+  transform: scale(0.98);
+}
+
 @media (min-width: 1476px) {
   .grid-cols-desktop-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
