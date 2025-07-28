@@ -15,7 +15,7 @@ export default function Home() {
       </main>
 
       {/* Testimonial and Brand Sliders above Map */}
-      <section className="w-full px-14 py-14 space-y-15">
+      <section className="w-full px-3 py-14 space-y-15">
         <TestimonialSlider />
         <BrandsSlider />
       </section>

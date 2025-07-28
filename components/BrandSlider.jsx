@@ -2,6 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import { useMediaQuery } from "react-responsive";
 
 // Brand data
 const BRANDS = [
@@ -28,6 +33,7 @@ const SLIDES_PER_VIEW = {
 const BrandSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidesPerView, setSlidesPerView] = useState(SLIDES_PER_VIEW.mobile);
+  const isMobile = useMediaQuery({ query: "(max-width: 639px)" });
 
   // Handle responsive slides per view
   useEffect(() => {
@@ -85,49 +91,74 @@ const BrandSlider = () => {
     >
       <div className="max-w-screen-2xl mx-auto relative">
         <div className="relative">
-          <div className="absolute inset-0 border border-line-border rounded-md pointer-events-none z-10" />
+          <div className="absolute inset-0 border-t border-l border-r border-b border-line-border rounded-md pointer-events-none z-10" />
 
           <div className="relative overflow-hidden rounded-md">
-            <div
-              className="grid gap-0"
-              style={{
-                gridTemplateColumns: `repeat(${slidesPerView}, minmax(0, 1fr))`,
-              }}
-            >
-              {visibleBrands.map((src, index) => (
-                <div
-                  key={index}
-                  className="border border-line-border flex items-center justify-center p-4"
-                >
-                  <Image
-                    src={src}
-                    alt={`Brand ${index + 1}`}
-                    width={130}
-                    height={130}
-                    loading="lazy"
-                    className="w-auto h-auto max-h-[126px] transition-all duration-300 grayscale hover:grayscale-0"
-                  />
-                </div>
-              ))}
-            </div>
+            {isMobile ? (
+              // Mobile view with Swiper
+              <Swiper
+                slidesPerView={2}
+                spaceBetween={0}
+                pagination={{
+                  clickable: true,
+                  el: ".brand-swiper-pagination",
+                }}
+                modules={[Pagination]}
+                className="brand-swiper"
+                grabCursor={true}
+                touchRatio={1}
+                resistance={true}
+                resistanceRatio={0.85}
+                speed={600}
+                effect="slide"
+              >
+                {BRANDS.map((src, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="border-r border-line-border flex items-center justify-center p-4">
+                      <Image
+                        src={src}
+                        alt={`Brand ${index + 1}`}
+                        width={130}
+                        height={130}
+                        loading="lazy"
+                        className="w-auto h-auto max-h-[126px] transition-all duration-500 grayscale hover:grayscale-0"
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : (
+              // Desktop view with grid - show all brands
+              <div
+                className="grid gap-0"
+                style={{
+                  gridTemplateColumns: `repeat(${BRANDS.length}, minmax(0, 1fr))`,
+                }}
+              >
+                {BRANDS.map((src, index) => (
+                  <div
+                    key={index}
+                    className="border-r border-line-border flex items-center justify-center p-4"
+                  >
+                    <Image
+                      src={src}
+                      alt={`Brand ${index + 1}`}
+                      width={130}
+                      height={130}
+                      loading="lazy"
+                      className="w-auto h-auto max-h-[126px] transition-all duration-500 grayscale hover:grayscale-0"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Navigation Dots */}
-        {shouldShowNavigation && totalPages > 1 && (
-          <div className="flex justify-center items-center mt-4 gap-2 cursor-pointer text-white ">
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goToSlide(i)}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  i + 1 === currentPage
-                    ? "bg-primary scale-125"
-                    : "bg-gray-300 hover:bg-gray-400"
-                }`}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
+        {/* Pagination outside the slider */}
+        {isMobile && (
+          <div className="flex justify-center items-center mt-6">
+            <div className="brand-swiper-pagination"></div>
           </div>
         )}
       </div>
