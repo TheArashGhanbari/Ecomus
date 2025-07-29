@@ -457,69 +457,74 @@ function ShopByCategory() {
   };
 
   return (
-    <div
-      className="flex justify-center items-center px-14"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="h-[305px] cursor-auto bg-[#23252e] hover:text-[rgb(153,21,242)] rounded-2xl max-w-[1420px] mx-auto flex items-center py-[56px] px-[95px]">
-        <div className="relative w-full">
-          {/* دکمه‌های اسکرول */}
-          <button
-            onClick={() => scroll("left")}
-            className={`absolute left-[-60px] top-[80px] -translate-y-1/2 z-20 p-3 rounded-full border border-white hover:border-[rgb(153,21,242)] hover:text-[rgb(153,21,242)] text-white bg-black/50 scroll-button ${
-              isHovered ? "visible" : ""
-            }`}
-          >
-            <ChevronLeft />
-          </button>
+    <>
+      <div
+        className="flex justify-center items-center px-14"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="h-[305px] cursor-auto bg-[#23252e] hover:text-[rgb(153,21,242)] rounded-2xl max-w-[1420px] mx-auto flex items-center py-[56px] px-[95px]">
+          <div className="relative w-full">
+            {/* دکمه‌های اسکرول */}
+            <button
+              onClick={() => scroll("left")}
+              className={`absolute left-[-60px] top-[80px] -translate-y-1/2 z-20 p-3 rounded-full border border-white hover:border-[rgb(153,21,242)] hover:text-[rgb(153,21,242)] text-white bg-black/50 scroll-button ${
+                isHovered ? "visible" : ""
+              }`}
+            >
+              <ChevronLeft />
+            </button>
 
-          <button
-            onClick={() => scroll("right")}
-            className={`absolute right-[-55px] top-[80px] -translate-y-1/2 z-20 p-3 rounded-full border border-white hover:border-[rgb(153,21,242)] hover:text-[rgb(153,21,242)] text-white bg-black/50 scroll-button ${
-              isHovered ? "visible" : ""
-            }`}
-          >
-            <ChevronRight />
-          </button>
+            <button
+              onClick={() => scroll("right")}
+              className={`absolute right-[-55px] top-[80px] -translate-y-1/2 z-20 p-3 rounded-full border border-white hover:border-[rgb(153,21,242)] hover:text-[rgb(153,21,242)] text-white bg-black/50 scroll-button ${
+                isHovered ? "visible" : ""
+              }`}
+            >
+              <ChevronRight />
+            </button>
 
-          {/* اسلایدر */}
-          <motion.div
-            ref={scrollRef}
-            style={{ touchAction: "pan-y" }}
-            className={`flex gap-[10px] overflow-hidden select-none ${
-              isDragging ? "cursor-auto" : "cursor-auto"
-            }`}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <div className="flex gap-[70px] justify-center items-center">
-              {categories.map((cat, idx) => (
-                <motion.div
-                  key={idx}
-                  className="flex flex-col justify-center items-center w-[146.79px] h-[193px] shrink-0"
-                  draggable={false}
-                  variants={itemVariants}
-                >
-                  <div className="overflow-hidden rounded-md">
-                    <img
-                      src={cat.img}
-                      alt={cat.name}
-                      className="w-[160px] h-[160px] cursor-pointer object-cover transition-transform duration-500 hover:scale-110"
-                      draggable={false}
-                    />
-                  </div>
-                  <p className="text-white mt-[20px] text-[18px] font-semibold cursor-pointer hover:text-[rgb(153,21,242)] transition-colors duration-300 ease-in-out">
-                    {cat.name}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+            {/* اسلایدر */}
+            <motion.div
+              ref={scrollRef}
+              style={{ touchAction: "pan-y" }}
+              className={`flex gap-[10px] overflow-hidden select-none ${
+                isDragging ? "cursor-auto" : "cursor-auto"
+              }`}
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <div className="flex gap-[70px] justify-center items-center">
+                {categories.map((cat, idx) => (
+                  <motion.div
+                    key={idx}
+                    className="flex flex-col justify-center items-center w-[146.79px] h-[193px] shrink-0"
+                    draggable={false}
+                    variants={itemVariants}
+                  >
+                    <div className="overflow-hidden rounded-md">
+                      <img
+                        src={cat.img}
+                        alt={cat.name}
+                        className="w-[160px] h-[160px] cursor-pointer object-cover transition-transform duration-500 hover:scale-110"
+                        draggable={false}
+                      />
+                    </div>
+                    <p className="text-white mt-[20px] text-[18px] font-semibold cursor-pointer hover:text-[rgb(153,21,242)] transition-colors duration-300 ease-in-out">
+                      {cat.name}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
-    </div>
+      <div className="h-[96px] ">
+        <div className="pt-[40px] pb-[56px]"></div>
+      </div>
+    </>
   );
 }
 
