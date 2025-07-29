@@ -2,6 +2,7 @@ import BrandsSlider from "@/components/BrandSlider";
 import MainTop from "@/components/main-top";
 import Map from "@/components/Map";
 import PremiumSupport from "@/components/PremiumSupport";
+import ShopByCategory from "@/components/ShopByCategory";
 import Marquee from "@/components/subtitile";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import TitleOfProduct from "@/components/TitleOfProduct";
@@ -14,6 +15,7 @@ export default function Home() {
         <Marquee />
         <PremiumSupport />
         <TitleOfProduct />
+        <ShopByCategory />
       </main>
 
       {/* Testimonial and Brand Sliders above Map */}
