@@ -1,11 +1,11 @@
-import BrandsSlider from "@/components/BrandSlider";
-import MainTop from "@/components/main-top";
-import Map from "@/components/Map";
-import PremiumSupport from "@/components/PremiumSupport";
-import ShopByCategory from "@/components/ShopByCategory";
-import Marquee from "@/components/subtitile";
-import TestimonialSlider from "@/components/TestimonialSlider";
-import TitleOfProduct from "@/components/TitleOfProduct";
+import BrandsSlider from "@/components/main/BrandSlider";
+import MainTop from "@/components/main/MainCart";
+import Map from "@/components/main/Map";
+import PremiumSupport from "@/components/main/PremiumSupport";
+import ShopByCategory from "@/components/main/ShopByCategory";
+import Marquee from "@/components/main/Subtitile";
+import TestimonialSlider from "@/components/main/TestimonialSlider";
+import TitleOfProduct from "@/components/main/TitleOfProduct";
 
 export default function Home() {
   return (

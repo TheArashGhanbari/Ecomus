@@ -62,6 +62,68 @@
   min-width: 280px; /* حداقل عرض کارت، میتونی تنظیم کنی */
   margin-right: 16px; /* فاصله بین کارت‌ها */
 }
+/* مخفی کردن دکمه‌های اسکرول تو موبایل (زیر 768px) */
+@media (max-width: 767px) {
+  .scroll-button {
+    display: none !important;
+  }
+}
+
+/* نمایش دکمه‌های اسکرول از تبلت به بالا */
+@media (min-width: 768px) {
+  .scroll-button {
+    display: block !important;
+  }
+}
+
+/* اسلایدر - کانتینر */
+.slider-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scroll برای iOS */
+  cursor: grab;
+  scroll-behavior: smooth;
+}
+
+/* تو تبلت و بالاتر overflow-x مخفی میشه تا فقط دکمه اسکرول کار کنه */
+@media (min-width: 768px) {
+  .slider-container {
+    overflow-x: hidden;
+  }
+}
+
+/* وقتی کاربر در حال درگ کردن است */
+.slider-container.active {
+  cursor: grabbing;
+}
+
+/* ظاهر دکمه‌ها */
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  transition: border-color 0.3s, color 0.3s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.scroll-button:hover {
+  border-color: rgb(153, 21, 242);
+  color: rgb(153, 21, 242);
+}
+
+.scroll-button.left {
+  left: -60px;
+}
+
+.scroll-button.right {
+  right: -55px;
+}
 
 /* کارت با عرض ثابت و ارتفاع ثابت در همه حالت‌ها */
 .card-scroll-item {
@@ -92,7 +154,7 @@
     /* height حذف شد چون بالا ثابته */
   }
 }
-
+.cart-divider::before
 /* مکان نقطه‌ها را ببریم زیر اسلایدها */
 .custom-swiper .swiper-pagination {
   margin-top: 20px;
@@ -425,4 +487,19 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+.cart-divider2 {
+  position: relative;
+  z-index: 2;
+}
+
+.custom-text::after {
+  content: "";
+  position: absolute;
+  top: 40px;
+  bottom: -4px; /* کمی پایین‌تر از متن */
+  left: 9px; /* تنظیم دستی برای رسیدن به زیر حرف e */
+  width: 273px; /* یا هر طول دلخواه */
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.347);
 }
