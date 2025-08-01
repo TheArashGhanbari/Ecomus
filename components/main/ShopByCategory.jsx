@@ -1,531 +1,255 @@
-// "use client";
-// import { useRef, useState, useEffect } from "react";
-// import { ChevronLeft, ChevronRight } from "lucide-react";
-
-// function ShopByCategory() {
-//   const scrollRef = useRef(null);
-//   const [isHovered, setIsHovered] = useState(false);
-//   const [isDragging, setIsDragging] = useState(false);
-//   const itemWidth = 200 + 40; // عرض آیتم + فاصله بین آیتم‌ها
-
-//   // تابع انیمیشن اسکرول نرم با easing
-//   function smoothScrollBy(element, distance, duration = 600) {
-//     const start = element.scrollLeft;
-//     const startTime = performance.now();
-
-//     function easeInOutQuad(t) {
-//       return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-//     }
-
-//     function animate(time) {
-//       const elapsed = time - startTime;
-//       const progress = Math.min(elapsed / duration, 1);
-//       const easeProgress = easeInOutQuad(progress);
-//       element.scrollLeft = start + distance * easeProgress;
-//       if (progress < 1) {
-//         requestAnimationFrame(animate);
-//       }
-//     }
-
-//     requestAnimationFrame(animate);
-//   }
-
-//   // تابع snap smooth به نزدیک‌ترین آیتم
-//   function snapToNearestItem(element, duration = 400) {
-//     const start = element.scrollLeft;
-//     const targetIndex = Math.round(start / itemWidth);
-//     const targetScrollLeft = targetIndex * itemWidth;
-//     const startTime = performance.now();
-
-//     function easeInOutQuad(t) {
-//       return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-//     }
-
-//     function animate(time) {
-//       const elapsed = time - startTime;
-//       const progress = Math.min(elapsed / duration, 1);
-//       const easeProgress = easeInOutQuad(progress);
-//       element.scrollLeft = start + (targetScrollLeft - start) * easeProgress;
-//       if (progress < 1) {
-//         requestAnimationFrame(animate);
-//       }
-//     }
-
-//     requestAnimationFrame(animate);
-//   }
-
-//   const scroll = (direction) => {
-//     if (!scrollRef.current) return;
-//     const distance = direction === "left" ? -itemWidth * 3 : itemWidth * 3;
-//     smoothScrollBy(scrollRef.current, distance, 600);
-
-//     // بعد از انیمیشن اسکرول، اسنپ به نزدیک‌ترین آیتم
-//     setTimeout(() => {
-//       if (scrollRef.current) snapToNearestItem(scrollRef.current, 300);
-//     }, 650);
-//   };
-
-//   useEffect(() => {
-//     const slider = scrollRef.current;
-//     if (!slider) return;
-
-//     let isDown = false;
-//     let startX = 0;
-//     let scrollLeft = 0;
-
-//     // رویدادهای ماوس
-//     const mouseDown = (e) => {
-//       isDown = true;
-//       setIsDragging(true);
-//       slider.classList.add("active");
-//       startX = e.pageX - slider.getBoundingClientRect().left;
-//       scrollLeft = slider.scrollLeft;
-//     };
-//     const mouseLeave = () => {
-//       if (!isDown) return;
-//       isDown = false;
-//       setIsDragging(false);
-//       slider.classList.remove("active");
-//       snapToNearestItem(slider, 300);
-//     };
-//     const mouseUp = () => {
-//       if (!isDown) return;
-//       isDown = false;
-//       setIsDragging(false);
-//       slider.classList.remove("active");
-//       snapToNearestItem(slider, 300);
-//     };
-//     const mouseMove = (e) => {
-//       if (!isDown) return;
-//       e.preventDefault();
-//       const x = e.pageX - slider.getBoundingClientRect().left;
-//       const walk = (x - startX) * 2; // کاهش سرعت اسکرول در درگ
-//       slider.scrollLeft = scrollLeft - walk;
-//     };
-
-//     // رویدادهای لمس (لمسی)
-//     let isTouching = false;
-//     let touchStartX = 0;
-//     let touchScrollLeft = 0;
-
-//     const touchStart = (e) => {
-//       isTouching = true;
-//       setIsDragging(true);
-//       slider.classList.add("active");
-//       touchStartX = e.touches[0].pageX - slider.getBoundingClientRect().left;
-//       touchScrollLeft = slider.scrollLeft;
-//     };
-
-//     const touchMove = (e) => {
-//       if (!isTouching) return;
-//       e.preventDefault();
-//       const x = e.touches[0].pageX - slider.getBoundingClientRect().left;
-//       const walk = (x - touchStartX) * 0.3;
-//       slider.scrollLeft = touchScrollLeft - walk;
-//     };
-
-//     const touchEnd = () => {
-//       if (!isTouching) return;
-//       isTouching = false;
-//       setIsDragging(false);
-//       slider.classList.remove("active");
-//       snapToNearestItem(slider, 300);
-//     };
-
-//     // اضافه کردن event listener ها
-//     slider.addEventListener("mousedown", mouseDown);
-//     slider.addEventListener("mouseleave", mouseLeave);
-//     slider.addEventListener("mouseup", mouseUp);
-//     slider.addEventListener("mousemove", mouseMove);
-
-//     slider.addEventListener("touchstart", touchStart, { passive: false });
-//     slider.addEventListener("touchmove", touchMove, { passive: false });
-//     slider.addEventListener("touchend", touchEnd);
-
-//     // پاکسازی در unmount
-//     return () => {
-//       slider.removeEventListener("mousedown", mouseDown);
-//       slider.removeEventListener("mouseleave", mouseLeave);
-//       slider.removeEventListener("mouseup", mouseUp);
-//       slider.removeEventListener("mousemove", mouseMove);
-
-//       slider.removeEventListener("touchstart", touchStart);
-//       slider.removeEventListener("touchmove", touchMove);
-//       slider.removeEventListener("touchend", touchEnd);
-//     };
-//   }, []);
-
-//   const categories = [
-//     {
-//       name: "Controllers",
-//       img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001825_af736a90-cdb8-4284-9547-5a5a4f8acc82.webp?v=1750064375&width=160",
-//     },
-//     {
-//       name: "Keyboards",
-//       img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001826_19b2a88f-ea2f-489d-a8d2-f0f032a33b14_1.jpg?v=1744881975&width=160",
-//     },
-//     {
-//       name: "Mice",
-//       img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001827_469928dd-dc0b-44e8-8346-1eaf8ce6c9cc.webp?v=1744882142&width=160",
-//     },
-//     {
-//       name: "Headsets",
-//       img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001828_c83bf841-4770-4163-92c5-2c01943be2ae.webp?v=1744882252&width=160",
-//     },
-//     {
-//       name: "Flight simulation",
-//       img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001829_e564fa55-a22c-41a9-911a-5a502039876e.webp?v=1744882310&width=160",
-//     },
-//     {
-//       name: "Race simulation",
-//       img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001830_df77d224-e4ff-4401-a38e-f5684872b9fd.webp?v=1744882421&width=160",
-//     },
-//     {
-//       name: "Monitor",
-//       img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018257.jpg?v=1744882547&width=160",
-//     },
-//   ];
-
-//   return (
-//     <div
-//       className="flex justify-center items-center px-14"
-//       onMouseEnter={() => setIsHovered(true)}
-//       onMouseLeave={() => setIsHovered(false)}
-//     >
-//       <div className="h-[305px] cursor-auto bg-[#23252e] hover:text-[rgb(153,21,242)] rounded-2xl max-w-[1420px] mx-auto flex items-center py-[56px] px-[95px]">
-//         <div className="relative w-full">
-//           {/* دکمه‌های اسکرول */}
-//           <button
-//             onClick={() => scroll("left")}
-//             className={`absolute left-[-60px] top-[80px] -translate-y-1/2 z-20 p-3 rounded-full border border-white hover:border-[rgb(153,21,242)]
-//             ${isHovered ? "opacity-100" : "opacity-0"} transition
-//             hover:text-[rgb(153,21,242)] text-white bg-black/50`}
-//           >
-//             <ChevronLeft />
-//           </button>
-
-//           <button
-//             onClick={() => scroll("right")}
-//             className={`absolute right-[-55px] top-[80px] -translate-y-1/2 z-20 p-3 rounded-full border border-white hover:border-[rgb(153,21,242)]
-//             ${isHovered ? "opacity-100" : "opacity-0"} transition
-//             hover:text-[rgb(153,21,242)] text-white bg-black/50`}
-//           >
-//             <ChevronRight />
-//           </button>
-
-//           {/* اسلایدر */}
-//           <div
-//             ref={scrollRef}
-//             style={{ touchAction: "pan-y" }}
-//             className={`flex gap-[10px] overflow-hidden select-none ${
-//               isDragging ? "cursor-auto" : "cursor-auto"
-//             }`}
-//           >
-//             <div className="flex gap-[70px] justify-center items-center">
-//               {categories.map((cat, idx) => (
-//                 <div
-//                   key={idx}
-//                   className="flex flex-col justify-center items-center w-[146.79px] h-[193px] shrink-0"
-//                   draggable={false}
-//                 >
-//                   <div className="overflow-hidden rounded-md">
-//                     <img
-//                       src={cat.img}
-//                       alt={cat.name}
-//                       className="w-[160px] h-[160px] cursor-pointer object-cover transition-transform duration-500 hover:scale-110"
-//                       draggable={false}
-//                     />
-//                   </div>
-//                   <p className="text-white mt-[20px] text-[18px] font-semibold cursor-pointer hover:text-[rgb(153,21,242)] transition-colors duration-300 ease-in-out">
-//                     {cat.name}
-//                   </p>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default ShopByCategory;
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
-function ShopByCategory() {
-  const scrollRef = useRef(null);
-  const [isHovered, setIsHovered] = useState(false);
+const categories = [
+  {
+    name: "Controllers",
+    img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001825_af736a90-cdb8-4284-9547-5a5a4f8acc82.webp?v=1750064375&width=160",
+  },
+  {
+    name: "Keyboards",
+    img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001826_19b2a88f-ea2f-489d-a8d2-f0f032a33b14_1.jpg?v=1744881975&width=160",
+  },
+  {
+    name: "Mice",
+    img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001827_469928dd-dc0b-44e8-8346-1eaf8ce6c9cc.webp?v=1744882142&width=160",
+  },
+  {
+    name: "Headsets",
+    img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001828_c83bf841-4770-4163-92c5-2c01943be2ae.webp?v=1744882252&width=160",
+  },
+  {
+    name: "Flight simulation",
+    img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001829_e564fa55-a22c-41a9-911a-5a502039876e.webp?v=1744882310&width=160",
+  },
+  {
+    name: "Race simulation",
+    img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001830_df77d224-e4ff-4401-a38e-f5684872b9fd.webp?v=1744882421&width=160",
+  },
+  {
+    name: "Monitor",
+    img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018257.jpg?v=1744882547&width=160",
+  },
+];
+
+function chunkArray(arr, chunkSize) {
+  const result = [];
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    result.push(arr.slice(i, i + chunkSize));
+  }
+  return result;
+}
+
+export default function ShopByCategory() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsPerSlide, setItemsPerSlide] = useState(3);
   const [isDragging, setIsDragging] = useState(false);
-  const itemWidth = 200 + 40; // عرض آیتم + فاصله بین آیتم‌ها
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const scrollRef = useRef(null);
 
-  // تابع انیمیشن اسکرول نرم با easing
-  function smoothScrollBy(element, distance, duration = 600) {
-    const start = element.scrollLeft;
-    const startTime = performance.now();
-
-    function easeInOutQuad(t) {
-      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-    }
-
-    function animate(time) {
-      const elapsed = time - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easeProgress = easeInOutQuad(progress);
-      element.scrollLeft = start + distance * easeProgress;
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    }
-
-    requestAnimationFrame(animate);
-  }
-
-  // تابع snap smooth به نزدیک‌ترین آیتم
-  function snapToNearestItem(element, duration = 400) {
-    const start = element.scrollLeft;
-    const targetIndex = Math.round(start / itemWidth);
-    const targetScrollLeft = targetIndex * itemWidth;
-    const startTime = performance.now();
-
-    function easeInOutQuad(t) {
-      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-    }
-
-    function animate(time) {
-      const elapsed = time - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easeProgress = easeInOutQuad(progress);
-      element.scrollLeft = start + (targetScrollLeft - start) * easeProgress;
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    }
-
-    requestAnimationFrame(animate);
-  }
-
-  const scroll = (direction) => {
-    if (!scrollRef.current) return;
-    const distance = direction === "left" ? -itemWidth * 3 : itemWidth * 3;
-    smoothScrollBy(scrollRef.current, distance, 600);
-
-    setTimeout(() => {
-      if (scrollRef.current) snapToNearestItem(scrollRef.current, 300);
-    }, 650);
-  };
+  // برای درگ موس در دسکتاپ
+  const [isDraggingDesktop, setIsDraggingDesktop] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
 
   useEffect(() => {
-    const slider = scrollRef.current;
-    if (!slider) return;
-
-    let isDown = false;
-    let startX = 0;
-    let scrollLeft = 0;
-
-    const mouseDown = (e) => {
-      isDown = true;
-      setIsDragging(true);
-      slider.classList.add("active");
-      startX = e.pageX - slider.getBoundingClientRect().left;
-      scrollLeft = slider.scrollLeft;
+    const updateItems = () => {
+      const w = window.innerWidth;
+      if (w < 640) setItemsPerSlide(2);
+      else if (w < 1024) setItemsPerSlide(3);
+      else setItemsPerSlide(categories.length);
     };
-    const mouseLeave = () => {
-      if (!isDown) return;
-      isDown = false;
-      setIsDragging(false);
-      slider.classList.remove("active");
-      snapToNearestItem(slider, 300);
-    };
-    const mouseUp = () => {
-      if (!isDown) return;
-      isDown = false;
-      setIsDragging(false);
-      slider.classList.remove("active");
-      snapToNearestItem(slider, 300);
-    };
-    const mouseMove = (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.getBoundingClientRect().left;
-      const walk = (x - startX) * 2;
-      slider.scrollLeft = scrollLeft - walk;
-    };
-
-    let isTouching = false;
-    let touchStartX = 0;
-    let touchScrollLeft = 0;
-
-    const touchStart = (e) => {
-      isTouching = true;
-      setIsDragging(true);
-      slider.classList.add("active");
-      touchStartX = e.touches[0].pageX - slider.getBoundingClientRect().left;
-      touchScrollLeft = slider.scrollLeft;
-    };
-
-    const touchMove = (e) => {
-      if (!isTouching) return;
-      e.preventDefault();
-      const x = e.touches[0].pageX - slider.getBoundingClientRect().left;
-      const walk = (x - touchStartX) * 0.1;
-      slider.scrollLeft = touchScrollLeft - walk;
-    };
-
-    const touchEnd = () => {
-      if (!isTouching) return;
-      isTouching = false;
-      setIsDragging(false);
-      slider.classList.remove("active");
-      snapToNearestItem(slider, 300);
-    };
-
-    slider.addEventListener("mousedown", mouseDown);
-    slider.addEventListener("mouseleave", mouseLeave);
-    slider.addEventListener("mouseup", mouseUp);
-    slider.addEventListener("mousemove", mouseMove);
-
-    slider.addEventListener("touchstart", touchStart, { passive: false });
-    slider.addEventListener("touchmove", touchMove, { passive: false });
-    slider.addEventListener("touchend", touchEnd);
-
-    return () => {
-      slider.removeEventListener("mousedown", mouseDown);
-      slider.removeEventListener("mouseleave", mouseLeave);
-      slider.removeEventListener("mouseup", mouseUp);
-      slider.removeEventListener("mousemove", mouseMove);
-
-      slider.removeEventListener("touchstart", touchStart);
-      slider.removeEventListener("touchmove", touchMove);
-      slider.removeEventListener("touchend", touchEnd);
-    };
+    updateItems();
+    window.addEventListener("resize", updateItems);
+    return () => window.removeEventListener("resize", updateItems);
   }, []);
 
-  const categories = [
-    {
-      name: "Controllers",
-      img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001825_af736a90-cdb8-4284-9547-5a5a4f8acc82.webp?v=1750064375&width=160",
-    },
-    {
-      name: "Keyboards",
-      img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001826_19b2a88f-ea2f-489d-a8d2-f0f032a33b14_1.jpg?v=1744881975&width=160",
-    },
-    {
-      name: "Mice",
-      img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001827_469928dd-dc0b-44e8-8346-1eaf8ce6c9cc.webp?v=1744882142&width=160",
-    },
-    {
-      name: "Headsets",
-      img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001828_c83bf841-4770-4163-92c5-2c01943be2ae.webp?v=1744882252&width=160",
-    },
-    {
-      name: "Flight simulation",
-      img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001829_e564fa55-a22c-41a9-911a-5a502039876e.webp?v=1744882310&width=160",
-    },
-    {
-      name: "Race simulation",
-      img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_1000001830_df77d224-e4ff-4401-a38e-f5684872b9fd.webp?v=1744882421&width=160",
-    },
-    {
-      name: "Monitor",
-      img: "https://ecomus-2-2.myshopify.com/cdn/shop/files/Group_10000018257.jpg?v=1744882547&width=160",
-    },
-  ];
+  const slides = chunkArray(categories, itemsPerSlide);
+  const isMobile = itemsPerSlide <= 3;
 
-  // انیمیشن‌های framer-motion
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
+  const goTo = (index) => {
+    if (index < 0 || index >= slides.length) return;
+    setCurrentIndex(index);
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
+  // تاچ موبایل
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging || touchStartX === null) return;
+    const touchEndX = e.touches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goTo(currentIndex + 1);
+      else goTo(currentIndex - 1);
+      setIsDragging(false);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    setTouchStartX(null);
+  };
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const itemWidth = 146.79; // عرض هر آیتم (از CSS)
+      const gap = 70; // فاصله بین آیتم‌ها
+      const scrollAmount = itemWidth + gap; // کل عرض به همراه فاصله
+
+      scrollRef.current.scrollBy({
+        left: direction === "right" ? scrollAmount : -scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // درگ موس دسکتاپ
+  const handleMouseDown = (e) => {
+    setIsDraggingDesktop(true);
+    setDragStartX(e.clientX);
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = "grabbing";
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDraggingDesktop || !scrollRef.current) return;
+    const diff = dragStartX - e.clientX;
+    scrollRef.current.scrollLeft += diff;
+    setDragStartX(e.clientX);
+  };
+
+  const handleMouseUp = () => {
+    setIsDraggingDesktop(false);
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = "grab";
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsDraggingDesktop(false);
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = "grab";
+    }
   };
 
   return (
     <>
       <div
-        className="flex justify-center items-center px-14"
+        className="flex justify-center items-center px-4 sm:px-10"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="h-[305px] cursor-auto bg-[#23252e] hover:text-[rgb(153,21,242)] rounded-2xl max-w-[1420px] mx-auto flex items-center py-[56px] px-[95px]">
-          <div className="relative w-full">
-            {/* دکمه‌های اسکرول */}
-            <button
-              onClick={() => scroll("left")}
-              className={`absolute left-[-60px] top-[80px] -translate-y-1/2 z-20 p-3 rounded-full border border-white hover:border-[rgb(153,21,242)] hover:text-[rgb(153,21,242)] text-white bg-black/50 scroll-button ${
-                isHovered ? "visible" : ""
-              }`}
+        <div className="h-[305px] w-full bg-[#23252e] rounded-2xl max-w-[1420px] py-[56px] px-[20px] sm:px-[40px] lg:px-[95px] relative overflow-hidden">
+          {isMobile ? (
+            <div
+              className="overflow-hidden"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
-              <ChevronLeft />
-            </button>
-
-            <button
-              onClick={() => scroll("right")}
-              className={`absolute right-[-55px] top-[80px] -translate-y-1/2 z-20 p-3 rounded-full border border-white hover:border-[rgb(153,21,242)] hover:text-[rgb(153,21,242)] text-white bg-black/50 scroll-button ${
-                isHovered ? "visible" : ""
-              }`}
-            >
-              <ChevronRight />
-            </button>
-
-            {/* اسلایدر */}
-            <motion.div
-              ref={scrollRef}
-              style={{ touchAction: "pan-y" }}
-              className={`flex gap-[10px] overflow-hidden select-none ${
-                isDragging ? "cursor-auto" : "cursor-auto"
-              }`}
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <div className="flex gap-[70px] justify-center items-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  initial={{ x: 300 }}
+                  animate={{ x: 0 }}
+                  exit={{ x: -300 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex gap-[50px] justify-center items-center"
+                >
+                  {slides.length > 0 &&
+                    slides[currentIndex]?.map((cat, idx) => (
+                      <div
+                        key={idx}
+                        className="flex flex-col justify-center items-center w-[146px] h-[193px]"
+                      >
+                        <div className="overflow-hidden rounded-md">
+                          <img
+                            src={cat.img}
+                            alt={cat.name}
+                            className="w-[160px] h-[160px] object-cover transition-transform hover:scale-110"
+                          />
+                        </div>
+                        <p className="text-white mt-4 text-[18px] font-semibold hover:text-[rgb(153,21,242)] transition-colors">
+                          {cat.name}
+                        </p>
+                      </div>
+                    ))}
+                </motion.div>
+              </AnimatePresence>
+              <div className="mt-4 flex justify-center gap-2 custom-swiper2">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => goTo(i)}
+                    className={`swiper-pagination-bullet ${
+                      i === currentIndex
+                        ? "swiper-pagination-bullet-active"
+                        : ""
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="hidden lg:flex justify-center items-center">
+              <button
+                onClick={() => scroll("left")}
+                className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full border border-white bg-black/50 text-white hover:border-purple-600 hover:text-purple-600 transition ${
+                  isHovered ? "block" : "hidden"
+                }`}
+              >
+                <ChevronLeft />
+              </button>
+              <button
+                onClick={() => scroll("right")}
+                className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full border border-white bg-black/50 text-white hover:border-purple-600 hover:text-purple-600 transition ${
+                  isHovered ? "block" : "hidden"
+                }`}
+              >
+                <ChevronRight />
+              </button>
+              <div
+                ref={scrollRef}
+                className="flex gap-[70px] w-max overflow-x-hidden overflow-y-hidden cursor-grab select-none"
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+              >
                 {categories.map((cat, idx) => (
-                  <motion.div
+                  <div
                     key={idx}
                     className="flex flex-col justify-center items-center w-[146.79px] h-[193px] shrink-0"
+                    onDragStart={(e) => e.preventDefault()}
                     draggable={false}
-                    variants={itemVariants}
                   >
                     <div className="overflow-hidden rounded-md">
                       <img
                         src={cat.img}
                         alt={cat.name}
-                        className="w-[160px] h-[160px] cursor-pointer object-cover transition-transform duration-500 hover:scale-110"
+                        className="w-[160px] h-[160px] object-cover transition-transform duration-300 hover:scale-110"
                         draggable={false}
+                        onDragStart={(e) => e.preventDefault()}
                       />
                     </div>
-                    <p className="text-white mt-[20px] text-[18px] font-semibold cursor-pointer hover:text-[rgb(153,21,242)] transition-colors duration-300 ease-in-out">
+                    <p className="text-white mt-4 text-[18px] font-semibold hover:text-purple-600 transition-colors">
                       {cat.name}
                     </p>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-            </motion.div>
-          </div>
+            </div>
+          )}
         </div>
       </div>
-      <div className="h-[96px] ">
-        <div className="pt-[40px] pb-[56px]"></div>
-      </div>
+      <div className="w-full h-[96px]"></div>
     </>
   );
 }
-
-export default ShopByCategory;

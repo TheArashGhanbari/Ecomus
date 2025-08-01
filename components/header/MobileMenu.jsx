@@ -12,7 +12,10 @@ export default function MobileMenu({ setIsOpen }) {
   return (
     <>
       <AnimatePresence>
-        <div className="h-[19999px] inset-0 z-50 bg-black/40 lg:hidden">
+        <div
+          className="h-[19999px] inset-0 z-50 bg-black/40 lg:hidden"
+          onClick={() => setIsOpen(false)}
+        >
           <motion.div
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}

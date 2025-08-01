@@ -493,13 +493,35 @@
   z-index: 2;
 }
 
-.custom-text::after {
+/* دایره‌های غیرفعال کوچیک (مثل نقطه داخلی) */
+.custom-swiper2 .swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background-color: #d1d5db6c;
+  border-radius: 9999px;
+  opacity: 1;
+  position: relative;
+  border: none;
+  transition: all 0.3s ease;
+  margin-left: 15px;
+}
+/* دایره فعال بزرگ با حاشیه */
+.custom-swiper2 .swiper-pagination-bullet-active {
+  width: 18px;
+  height: 18px;
+  background-color: transparent;
+  border: 2px solid rgb(255, 255, 255);
+  z-index: 0; /* این باعث میشه جلو نیاد */
+}
+/* نقطه داخلی در دایره فعال */
+.custom-swiper2 .swiper-pagination-bullet-active::before {
   content: "";
   position: absolute;
-  top: 40px;
-  bottom: -4px; /* کمی پایین‌تر از متن */
-  left: 9px; /* تنظیم دستی برای رسیدن به زیر حرف e */
-  width: 273px; /* یا هر طول دلخواه */
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.347);
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: rgb(253, 253, 253);
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
 }

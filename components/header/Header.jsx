@@ -3,11 +3,15 @@ import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
+import SearchMenu from "./SearchMenu";
+import CartMenu from "./CartMenu";
+import CartMenu2 from "./CartMenu2";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartOpen2, setIsCartOpen2] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showHeader, setShowHeader] = useState(true);
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -58,6 +62,10 @@ function Header() {
       >
         {/* Top Bar - Mobile & Desktop */}
         {isMenuOpen && <MobileMenu setIsOpen={setIsMenuOpen} />}
+        {isSearchOpen && <SearchMenu setIsOpen={setIsSearchOpen} />}
+        {isCartOpen && <CartMenu setIsOpen={setIsCartOpen} />}
+        {isCartOpen2 && <CartMenu2 setIsOpen={setIsCartOpen2} />}
+
         <div className="relative w-full h-[60px] lg:h-25 lg:px-14 md:px-4 px-4 flex items-center justify-between">
           <div className="absolute left-1/2 transform -translate-x-1/2">
             <form
@@ -168,8 +176,10 @@ function Header() {
                 </svg>
                 <span>Wishlist</span>
               </div>
-              <div className="relative flex items-center cursor-pointer hover:text-[rgb(153,21,242)] cart-divider">
-                {" "}
+              <button
+                onClick={() => setIsCartOpen2(true)}
+                className="relative  flex items-center cursor-pointer hover:text-[rgb(153,21,242)] cart-divider"
+              >
                 <svg
                   className="lg:hdt-block hdt-hidden"
                   xmlns="http://www.w3.org/2000/svg"
@@ -184,14 +194,14 @@ function Header() {
                 <span className="absolute -top-2 -right-2 text-white bg-[rgb(153,21,242)] text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                   {" "}
                   0{" "}
-                </span>{" "}
-              </div>
+                </span>
+              </button>
             </div>
 
             {/* Mobile Search Button */}
             <button
               className="lg:hidden text-white"
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              onClick={() => setIsSearchOpen(true)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -208,11 +218,14 @@ function Header() {
             </button>
 
             {/* Mobile Cart Icon */}
-            <div className="lg:hidden relative">
+            <div
+              className="lg:hidden relative"
+              onClick={() => setIsCartOpen(true)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="26"
-                height="29"
+                width="20"
+                height="25"
                 viewBox="0 0 26 29"
                 fill="currentColor"
               >

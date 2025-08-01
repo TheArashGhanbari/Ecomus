@@ -1,5 +1,7 @@
 import BrandsSlider from "@/components/main/BrandSlider";
 import MainTop from "@/components/main/MainCart";
+import HotDeals from "@/components/main/HotDeals";
+
 import Map from "@/components/main/Map";
 import PremiumSupport from "@/components/main/PremiumSupport";
 import ShopByCategory from "@/components/main/ShopByCategory";
@@ -16,6 +18,7 @@ export default function Home() {
         <PremiumSupport />
         <TitleOfProduct />
         <ShopByCategory />
+        <HotDeals />
       </main>
 
       {/* Testimonial and Brand Sliders above Map */}
