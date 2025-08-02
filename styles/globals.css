@@ -515,13 +515,44 @@
 }
 /* نقطه داخلی در دایره فعال */
 .custom-swiper2 .swiper-pagination-bullet-active::before {
+  width: 6px;
+  height: 6px;
+  background-color: #d1d5db;
+  border-radius: 9999px;
+  opacity: 1;
+  position: relative;
+  border: none;
+  transition: all 0.3s ease;
+}
+.custom-swiper .slick-dots li button {
+  width: 6px;
+  height: 6px;
+  background-color: #d1d5db;
+  border-radius: 9999px;
+  opacity: 1;
+  border: none;
+  position: relative;
+  transition: all 0.3s ease;
+  padding: 0;
+  box-shadow: none;
+}
+
+.custom-swiper .slick-dots li.slick-active button {
+  width: 18px;
+  height: 18px;
+  background-color: transparent;
+  border: 2px solid black;
+  z-index: 0; /* این باعث میشه جلو نیاد */
+}
+
+.custom-swiper .slick-dots li.slick-active button::before {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   width: 6px;
   height: 6px;
-  background: rgb(253, 253, 253);
+  background: black;
   border-radius: 9999px;
   transform: translate(-50%, -50%);
 }
