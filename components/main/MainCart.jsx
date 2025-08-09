@@ -1,4 +1,13 @@
+"use client";
+import React, { useState, useEffect } from "react";
+
 function MainTop() {
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    setAnimate(true);
+  }, []);
+
   return (
     <div className="w-full">
       <div
@@ -10,7 +19,11 @@ function MainTop() {
         <div className="relative z-10 w-full max-w-[1421px] mx-auto">
           <div className="scroll-x-hidden-scrollbar flex-nowrap-mobile px-1 -mx-1">
             {/* کارت اول */}
-            <div className="group relative text-white font-bold card-scroll-item h-[300px] bg-black bg-opacity-50 rounded-3xl backdrop-blur-sm flex items-end px-6 sm:px-8 md:px-[50px] py-6 md:py-[70px] overflow-hidden">
+            <div
+              className={`group relative text-white font-bold card-scroll-item h-[300px] bg-black bg-opacity-50 rounded-3xl backdrop-blur-sm flex items-end px-6 sm:px-8 md:px-[50px] py-6 md:py-[70px] overflow-hidden ${
+                animate ? "animate-slide-up-fade-in" : ""
+              }`}
+            >
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                 style={{
@@ -18,7 +31,7 @@ function MainTop() {
                   zIndex: -1,
                 }}
               ></div>
-              <div className="relative z-10">
+              <div className="relative z-10 card-content">
                 <p className="mb-2 md:mb-4 text-base md:text-[22px]">
                   NO.1 GEA
                 </p>
@@ -43,7 +56,11 @@ function MainTop() {
             </div>
 
             {/* کارت دوم */}
-            <div className="group relative text-white font-bold card-scroll-item h-[300px] bg-black bg-opacity-50 rounded-3xl backdrop-blur-sm flex items-end px-6 sm:px-8 md:px-[50px] py-6 md:py-[70px] overflow-hidden">
+            <div
+              className={`group relative text-white font-bold card-scroll-item h-[300px] bg-black bg-opacity-50 rounded-3xl backdrop-blur-sm flex items-end px-6 sm:px-8 md:px-[50px] py-6 md:py-[70px] overflow-hidden ${
+                animate ? "animate-slide-up-fade-in" : ""
+              }`}
+            >
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                 style={{
@@ -51,7 +68,7 @@ function MainTop() {
                   zIndex: -1,
                 }}
               ></div>
-              <div className="relative z-10">
+              <div className="relative z-10 card-content">
                 <p className="mb-2 md:mb-4 text-base md:text-[22px]">
                   NO.1 GEA
                 </p>

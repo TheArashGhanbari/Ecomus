@@ -1,38 +1,128 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-@keyframes slideGlow {
+@keyframes slideUpFadeIn {
   0% {
-    right: -50px;
     opacity: 0;
-  }
-  20% {
-    opacity: 0.2;
+    transform: translateY(20px);
   }
   100% {
-    right: calc(100% + 10px);
-    opacity: 0;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+.animate-slide-up-fade-in {
+  opacity: 0;
+  animation-name: slideUpFadeIn;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-delay: 0s; /* پیش‌فرض */
+}
+
+.scroll-button {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.scroll-button.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
 /* globals.css */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 
 /* globals.css */
 
 .scroll-x-hidden-scrollbar {
+  display: flex;
   overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
 }
-
 .scroll-x-hidden-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
 
-.flex-nowrap-mobile {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1rem;
+.card-scroll-item {
+  flex: 0 0 auto; /* جلوگیری از کوچک شدن کارت ها */
+  min-width: 280px; /* حداقل عرض کارت، میتونی تنظیم کنی */
+  margin-right: 16px; /* فاصله بین کارت‌ها */
+}
+/* مخفی کردن دکمه‌های اسکرول تو موبایل (زیر 768px) */
+@media (max-width: 767px) {
+  .scroll-button {
+    display: none !important;
+  }
+}
+
+/* نمایش دکمه‌های اسکرول از تبلت به بالا */
+@media (min-width: 768px) {
+  .scroll-button {
+    display: block !important;
+  }
+}
+
+/* اسلایدر - کانتینر */
+.slider-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scroll برای iOS */
+  cursor: grab;
+  scroll-behavior: smooth;
+}
+
+/* تو تبلت و بالاتر overflow-x مخفی میشه تا فقط دکمه اسکرول کار کنه */
+@media (min-width: 768px) {
+  .slider-container {
+    overflow-x: hidden;
+  }
+}
+
+/* وقتی کاربر در حال درگ کردن است */
+.slider-container.active {
+  cursor: grabbing;
+}
+
+/* ظاهر دکمه‌ها */
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  transition: border-color 0.3s, color 0.3s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.scroll-button:hover {
+  border-color: rgb(153, 21, 242);
+  color: rgb(153, 21, 242);
+}
+
+.scroll-button.left {
+  left: -60px;
+}
+
+.scroll-button.right {
+  right: -55px;
 }
 
 /* کارت با عرض ثابت و ارتفاع ثابت در همه حالت‌ها */
@@ -64,7 +154,7 @@
     /* height حذف شد چون بالا ثابته */
   }
 }
-
+.cart-divider::before
 /* مکان نقطه‌ها را ببریم زیر اسلایدها */
 .custom-swiper .swiper-pagination {
   margin-top: 20px;
@@ -397,4 +487,72 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+.cart-divider2 {
+  position: relative;
+  z-index: 2;
+}
+
+/* دایره‌های غیرفعال کوچیک (مثل نقطه داخلی) */
+.custom-swiper2 .swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background-color: #d1d5db6c;
+  border-radius: 9999px;
+  opacity: 1;
+  position: relative;
+  border: none;
+  transition: all 0.3s ease;
+  margin-left: 15px;
+}
+/* دایره فعال بزرگ با حاشیه */
+.custom-swiper2 .swiper-pagination-bullet-active {
+  width: 18px;
+  height: 18px;
+  background-color: transparent;
+  border: 2px solid rgb(255, 255, 255);
+  z-index: 0; /* این باعث میشه جلو نیاد */
+}
+/* نقطه داخلی در دایره فعال */
+.custom-swiper2 .swiper-pagination-bullet-active::before {
+  width: 6px;
+  height: 6px;
+  background-color: #d1d5db;
+  border-radius: 9999px;
+  opacity: 1;
+  position: relative;
+  border: none;
+  transition: all 0.3s ease;
+}
+.custom-swiper .slick-dots li button {
+  width: 6px;
+  height: 6px;
+  background-color: #d1d5db;
+  border-radius: 9999px;
+  opacity: 1;
+  border: none;
+  position: relative;
+  transition: all 0.3s ease;
+  padding: 0;
+  box-shadow: none;
+}
+
+.custom-swiper .slick-dots li.slick-active button {
+  width: 18px;
+  height: 18px;
+  background-color: transparent;
+  border: 2px solid black;
+  z-index: 0; /* این باعث میشه جلو نیاد */
+}
+
+.custom-swiper .slick-dots li.slick-active button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: black;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
 }
