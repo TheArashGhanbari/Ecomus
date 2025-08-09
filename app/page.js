@@ -7,7 +7,7 @@ import TestimonialSlider from "@/components/TestimonialSlider";
 import TitleOfProduct from "@/components/TitleOfProduct";
 
 export default function Home() {
-  return (
+  return (  
     <>
       <main className="min-h-screen">
         <MainTop />
